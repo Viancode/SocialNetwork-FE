@@ -1,22 +1,30 @@
 import {Card, CardContent, CardHeader} from "@/components/ui/card";
-import {Button} from "@/components/ui/button";
-import {Plus} from "lucide-react";
-import Post from "@/app/(overview)/components/post/Post";
+import SomethingWentWrong from "@/app/(overview)/components/ultils/SomethingWentWrong";
+import {getNewsFeed} from "@/lib/data";
+import PostList from "@/app/(overview)/components/post/PostList";
 
-export default function Page() {
+
+export default async function Page({searchParams}) {
+    const page = searchParams?.page;
+    const result = await getNewsFeed(page);
+    let pageMeta = null;
+    let userPost = null;
+
+    if (result.isSuccessful) {
+        pageMeta = result.data.pageMeta;
+        userPost = result.data.data;
+    }
+
     return (
         <Card>
             <CardHeader>
                 <div className="flex items-center justify-between">
-                    <h4 className="font-semibold">Newsfeed</h4>
-                    <Button variant="outline" size="sm">
-                        <Plus/>
-                        <span>Create Post</span>
-                    </Button>
+                    <h2 className="font-semibold">Newsfeed</h2>
                 </div>
             </CardHeader>
             <CardContent className="grid gap-6">
-                {/*<Post/>*/}
+                {!result.isSuccessful ? <SomethingWentWrong/> :
+                    <PostList initialUserPost={userPost} initialPageMeta={pageMeta}/>}
             </CardContent>
         </Card>
     )

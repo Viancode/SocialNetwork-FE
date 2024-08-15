@@ -2,9 +2,10 @@ import React from 'react';
 import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/avatar";
 import {formatDistanceToNow} from 'date-fns';
 import {getAvatarFallback} from "@/lib/utils";
-import {Heart, Reply} from "lucide-react";
+import {ArrowDown, Heart, Reply} from "lucide-react";
 import Image from "next/image";
 import {Button} from "@/components/ui/button";
+import Link from "next/link";
 
 function CommentItem({comment}) {
     const {
@@ -21,8 +22,10 @@ function CommentItem({comment}) {
         image,
         reactCount
     } = comment;
+
+
     return (
-        <div className="bg-card p-4 rounded-lg border border-border">
+        <div className="bg-card p-4">
             <div className="flex justify-between items-start">
                 <div className="flex items-center gap-3">
                     <Avatar className="w-10 h-10 border">
@@ -30,7 +33,9 @@ function CommentItem({comment}) {
                         <AvatarFallback>{getAvatarFallback(username)}</AvatarFallback>
                     </Avatar>
                     <div className="grid gap-1">
-                        <div className="font-semibold">{username}</div>
+                        <Link href={`/home/${userId}`}>
+                            <div className="font-semibold">{username}</div>
+                        </Link>
                         <time
                             className="text-xs text-muted-foreground">{createdAt !== updatedAt ? "Updated" : ""} {`${formatDistanceToNow(updatedAt)} ago`}</time>
                     </div>
@@ -40,7 +45,7 @@ function CommentItem({comment}) {
                     <span>{reactCount}</span>
                 </div>
             </div>
-            <div className="mt-4 text-sm leading-relaxed text-muted-foreground">
+            <div className="mt-4 text-sm">
                 <p>
                     {content}
                 </p>
@@ -55,10 +60,13 @@ function CommentItem({comment}) {
                     style={{aspectRatio: "800/400", objectFit: "cover"}}
                 />
             )}
-            <Button variant="ghost" size="icon">
-                <Reply className="w-5 h-5"/>
-                <span>{numberOfChild} reply</span>
-            </Button>
+            {numberOfChild !== 0 && (
+                <Button variant="ghost" className="flex items-center gap-1">
+                    <ArrowDown className="w-5 h-5"/>
+                    <span className="leading-relaxed text-muted-foreground">{numberOfChild} reply</span>
+                </Button>
+            )}
+
         </div>
     );
 }

@@ -34,7 +34,7 @@ function AuthProvider({children}) {
 
     useEffect(() => {
         async function initializeAuth() {
-            const token = Cookies.get("access-token");
+            const token = await Cookies.get("access-token");
             if (token) {
                 try {
                     const decodedToken = jwtDecode(token);

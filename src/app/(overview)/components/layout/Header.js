@@ -2,8 +2,11 @@ import Link from "next/link";
 import {Contact, HomeIcon, Mountain, NewspaperIcon} from "lucide-react";
 import ModeToggle from "@/app/(overview)/components/layout/ModeToggle";
 import UserAccount from "@/app/(overview)/components/user/UserAccount";
+import {getUserProfile} from "@/lib/data";
 
-function Header() {
+async function Header() {
+    const {_, data: userInfo} = await getUserProfile();
+
     return (
         <div className="flex flex-col bg-background">
             <header className="sticky top-0 z-40 border-b bg-background">
@@ -25,7 +28,7 @@ function Header() {
                     </nav>
                     <div className="flex justify-between gap-4">
                         <ModeToggle/>
-                        <UserAccount/>
+                        <UserAccount userInfo={userInfo}/>
                     </div>
                 </div>
             </header>

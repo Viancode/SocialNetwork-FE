@@ -1,6 +1,5 @@
 "use client";
 
-import {getProvince} from "@/lib/data";
 import {Input} from "@/components/ui/input"
 import {Textarea} from "@/components/ui/textarea"
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select"
@@ -13,10 +12,11 @@ import Link from "next/link";
 import {register} from "@/lib/action";
 import {toast} from "sonner";
 import {useRouter} from "next/navigation";
+import {getProvince} from "@/lib/utils";
+
 
 export default function Page() {
     const provinces = getProvince();
-    const router = useRouter()
 
     const form = useForm({
         resolver: zodResolver(registerFormSchema),

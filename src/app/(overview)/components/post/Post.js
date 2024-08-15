@@ -2,22 +2,17 @@
 import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/avatar";
 import Image from "next/image";
 import {Button} from "@/components/ui/button";
-import {Angry, FilePen, Frown, Heart, MessageCircle, Smile, Tag, ThumbsUp} from "lucide-react";
+import {FilePen, Heart, MessageCircle, Tag} from "lucide-react";
 import {capitalizeFirstLetter, getAvatarFallback} from "@/lib/utils";
-import {Card, CardContent, CardFooter, CardHeader} from "@/components/ui/card";
+import {Card, CardContent, CardHeader} from "@/components/ui/card";
 import {formatDistanceToNow} from "date-fns";
 import {Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious} from "@/components/ui/carousel";
-import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger} from "@/components/ui/dropdown-menu";
 import Link from "next/link";
 import {useAuth} from "@/app/(overview)/components/auth/AuthContext";
 import Spinner from "@/app/(overview)/components/ultils/Spinner";
-import {useState} from "react";
-import CommentDialog from "@/app/(overview)/components/comment/CommentDialog";
 import TextExpander from "@/app/(overview)/components/ultils/TextExpander";
 
 function Post({postInfo}) {
-    const [showReactionPage, setShowReactionPage] = useState(false)
-    const [showCommentPage, setShowCommentPage] = useState(false)
     const {currentUserId, loading} = useAuth();
     const {
         id,
@@ -49,7 +44,9 @@ function Post({postInfo}) {
                                 <AvatarFallback>{getAvatarFallback(username)}</AvatarFallback>
                             </Avatar>
                             <div className="grid gap-0.5">
-                                <div className="font-semibold">{username}</div>
+                                <Link href={`/home/${userId}`}>
+                                    <div className="font-semibold">{username}</div>
+                                </Link>
                                 <div className="text-xs text-muted-foreground flex items-center gap-2">
                                     <div className="bg-primary rounded-full px-2 py-0.5 text-primary-foreground">
                                         {capitalizeFirstLetter(visibility)}
@@ -70,7 +67,7 @@ function Post({postInfo}) {
                     <div className="px-4">
                         <div className="grid gap-4">
                             <TextExpander>{content}</TextExpander>
-                            {photoResponses.length > 0 && (
+                            {photoResponses && (
                                 <div className="flex justify-center">
                                     <Carousel className="w-full max-w-md">
                                         <CarouselContent>
@@ -92,57 +89,59 @@ function Post({postInfo}) {
                         <div className="flex items-center gap-4">
                             <div className="flex items-center gap-1 text-sm">
                                 <Heart className="w-4 h-4"/>
-                                <span>{`${numberOfReacts} reactions`}</span>
+                                <Link href={`/react?postId=${id}`}>
+                                    <span>{`${numberOfReacts} reactions`}</span>
+                                </Link>
                             </div>
-                            <div className="flex items-center gap-1 text-sm cursor-pointer"
-                                 onClick={() => setShowCommentPage(true)}>
-                                <MessageCircle className="w-4 h-4"/>
-                                <span>{`${numberOfComments} comments`}</span>
-                            </div>
+                            <Link href={`/comment?postId=${id}`}>
+                                <div className="flex items-center gap-1 text-sm cursor-pointer">
+                                    <MessageCircle className="w-4 h-4"/>
+                                    <span>{`${numberOfComments} comments`}</span>
+                                </div>
+                            </Link>
                         </div>
                         <div className="flex items-center gap-2">
                             <div className="flex items-center gap-1 text-sm">
-                                <Tag className="w-4 h-4"/>
                                 <span>{tagUsers.map(user => {
                                     return <Link key={user.id} href={`/home/${user.id}`}>
                                         {`${user.username} `}
                                     </Link>
                                 })}</span>
+                                <Tag className="w-4 h-4"/>
                             </div>
-                            <DropdownMenu>
-                                <DropdownMenuTrigger asChild>
-                                    <Button variant="ghost" size="icon">
-                                        <Smile className="w-5 h-5"/>
-                                    </Button>
-                                </DropdownMenuTrigger>
-                                <DropdownMenuContent align="end">
-                                    <DropdownMenuItem>
-                                        <ThumbsUp className="w-4 h-4 mr-2"/>
-                                        Like
-                                    </DropdownMenuItem>
-                                    <DropdownMenuItem>
-                                        <Frown className="w-4 h-4 mr-2"/>
-                                        Sad
-                                    </DropdownMenuItem>
-                                    <DropdownMenuItem>
-                                        <Smile className="w-4 h-4 mr-2"/>
-                                        Wow
-                                    </DropdownMenuItem>
-                                    <DropdownMenuItem>
-                                        <Angry className="w-4 h-4 mr-2"/>
-                                        Angry
-                                    </DropdownMenuItem>
-                                    <DropdownMenuItem>
-                                        <Heart className="w-4 h-4 mr-2"/>
-                                        Love
-                                    </DropdownMenuItem>
-                                </DropdownMenuContent>
-                            </DropdownMenu>
+                            {/*<DropdownMenu>*/}
+                            {/*    <DropdownMenuTrigger asChild>*/}
+                            {/*        <Button variant="ghost" size="icon">*/}
+                            {/*            <Smile className="w-5 h-5"/>*/}
+                            {/*        </Button>*/}
+                            {/*    </DropdownMenuTrigger>*/}
+                            {/*    <DropdownMenuContent align="end">*/}
+                            {/*        <DropdownMenuItem>*/}
+                            {/*            <ThumbsUp className="w-4 h-4 mr-2"/>*/}
+                            {/*            Like*/}
+                            {/*        </DropdownMenuItem>*/}
+                            {/*        <DropdownMenuItem>*/}
+                            {/*            <Frown className="w-4 h-4 mr-2"/>*/}
+                            {/*            Sad*/}
+                            {/*        </DropdownMenuItem>*/}
+                            {/*        <DropdownMenuItem>*/}
+                            {/*            <Smile className="w-4 h-4 mr-2"/>*/}
+                            {/*            Wow*/}
+                            {/*        </DropdownMenuItem>*/}
+                            {/*        <DropdownMenuItem>*/}
+                            {/*            <Angry className="w-4 h-4 mr-2"/>*/}
+                            {/*            Angry*/}
+                            {/*        </DropdownMenuItem>*/}
+                            {/*        <DropdownMenuItem>*/}
+                            {/*            <Heart className="w-4 h-4 mr-2"/>*/}
+                            {/*            Love*/}
+                            {/*        </DropdownMenuItem>*/}
+                            {/*    </DropdownMenuContent>*/}
+                            {/*</DropdownMenu>*/}
                         </div>
                     </div>
                 </CardContent>
             </Card>
-            {showCommentPage && <CommentDialog setShowCommentPage={setShowCommentPage} postId={id}/>}
         </>
     )
 }

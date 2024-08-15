@@ -8,6 +8,7 @@ export async function refreshAccessToken() {
         return await http
             .post("/auth/refresh", null, {params: {refresh_token}})
             .then((res) => {
+                cookies().set("access-token", res.data.result.data.accessToken, {maxAge: process.env.NEXT_PUBLIC_ACCESS_TOKEN_EXPIRY});
                 return {
                     isSuccessful: true,
                     data: res.data.result.data
@@ -16,7 +17,6 @@ export async function refreshAccessToken() {
             .catch((err) => {
                 return {
                     isSuccessful: false,
-                    message: err.response.data.message
                 }
             });
     }

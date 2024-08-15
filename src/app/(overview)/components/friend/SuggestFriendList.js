@@ -6,6 +6,12 @@ import SomethingWentWrong from "@/app/(overview)/components/ultils/SomethingWent
 
 async function SuggestFriendList() {
     const res = await getSuggestFriend();
+    let pageMeta = null;
+    let suggestFriends = null;
+    if (res.isSuccessful) {
+        pageMeta = res.data.pageMeta;
+        suggestFriends = res.data.data;
+    }
 
     return (
         <Card>
@@ -14,7 +20,7 @@ async function SuggestFriendList() {
             </CardHeader>
             <CardContent className="grid gap-4 max-h-96">
                 <ScrollArea className="max-h-96">
-                    {res.isSuccessful ? res.data.map((friend) => {
+                    {res.isSuccessful ? suggestFriends.map((friend) => {
                         return <SuggestFriendItem key={friend.id} suggestFriendInfo={friend}/>
                     }) : <SomethingWentWrong/>}
                 </ScrollArea>

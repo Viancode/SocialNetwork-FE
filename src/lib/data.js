@@ -1,9 +1,6 @@
-import provinces from './province.json';
+"use server"
 import http from "@/lib/axios";
 
-export function getProvince() {
-    return provinces.sort((a, b) => a.province_name.localeCompare(b.province_name));
-}
 
 export async function getUserProfile(target_user_id) {
     return await http
@@ -62,7 +59,7 @@ export async function getSuggestFriend(page = 1) {
         .then((res) => {
             return {
                 isSuccessful: true,
-                data: res.data.result.data
+                data: res.data.result
             };
         })
         .catch((err) => {
@@ -79,7 +76,7 @@ export async function getUserPost(page = 1, target_user_id) {
         .then((res) => {
             return {
                 isSuccessful: true,
-                data: res.data.result.data
+                data: res.data.result
             };
         })
         .catch((err) => {
@@ -96,7 +93,7 @@ export async function getCommentInPost(page = 1, post_id) {
         .then((res) => {
             return {
                 isSuccessful: true,
-                data: res.data.result.data
+                data: res.data.result
             };
         })
         .catch((err) => {
@@ -105,4 +102,55 @@ export async function getCommentInPost(page = 1, post_id) {
                 message: err.response.data.message
             };
         })
+}
+
+export async function getReactionInPost(page = 1, post_id) {
+    return http
+        .get('post_reaction', {params: {page, post_id}})
+        .then((res) => {
+            return {
+                isSuccessful: true,
+                data: res.data.result
+            };
+        })
+        .catch((err) => {
+            return {
+                isSuccessful: false,
+                message: err.response.data.message
+            };
+        })
+}
+
+export async function getNewsFeed(page = 1) {
+    return await http
+        .get("/newsfeed", {params: {page}})
+        .then((res) => {
+            return {
+                isSuccessful: true,
+                data: res.data.result
+            };
+        })
+        .catch((err) => {
+            return {
+                isSuccessful: false,
+                message: err.response.data.message
+            };
+        });
+}
+
+export async function getChildComment(parent_comment_id, post_id) {
+    return await http
+        .get(`/comment/${parent_comment_id}`, {params: {post_id}})
+        .then((res) => {
+            return {
+                isSuccessful: true,
+                data: res.data.result
+            };
+        })
+        .catch((err) => {
+            return {
+                isSuccessful: false,
+                message: err.response.data.message
+            };
+        });
 }

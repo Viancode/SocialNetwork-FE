@@ -34,7 +34,7 @@ export default function Page() {
     async function onSubmit(values) {
         const res = await login(values);
         if (!res.isSuccessful) {
-            toast.error(res.message)
+            toast.error("Login failed. Please check your email and password again");
         } else {
             toast.success("Login successful");
             await router.push("/home");

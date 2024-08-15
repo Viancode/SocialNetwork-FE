@@ -1,18 +1,12 @@
-"use client"
-import {useAuth} from "@/app/(overview)/components/auth/AuthContext";
-import {redirect, useRouter} from "next/navigation";
-import Spinner from "@/app/(overview)/components/ultils/Spinner";
+import {redirect} from "next/navigation";
+import {getUserProfile} from "@/lib/data";
 
-export default function Page() {
-    const {currentUserId, loading} = useAuth();
-    const router = useRouter();
-    if (loading) {
-        return <Spinner/>;
+export default async function Page() {
+    const {_, data: userInfo} = await getUserProfile();
+
+    if (!userInfo.id) {
+        redirect("/login");
     }
 
-    if (!currentUserId) {
-        router.push("/login");
-    }
-
-    router.push(`/home/${currentUserId}`);
+    redirect(`/home/${userInfo.id}`);
 }

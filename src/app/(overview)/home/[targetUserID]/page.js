@@ -4,12 +4,22 @@ import UserForm from "@/app/(overview)/components/user/UserForm";
 import {getCommentInPost, getUserPost, getUserProfile} from "@/lib/data";
 import NotAllow from "@/app/(overview)/components/ultils/NotAllow";
 import UserProfile from "@/app/(overview)/components/user/UserProfile";
+import PostList from "@/app/(overview)/components/post/PostList";
 
-export default async function Page({params}) {
-    let targetUserId = params.targetUserID;
+export default async function Page({params, searchParams}) {
+    const targetUserId = params.targetUserID;
+    const page = searchParams?.page;
     const userProfile = await getUserProfile(targetUserId);
-    const userPost = await getUserPost(1, targetUserId);
-    const comment = await getCommentInPost(1, 19);
+    const result = await getUserPost(page, targetUserId);
+
+    let pageMeta = null;
+    let userPost = null;
+
+    if (result.isSuccessful) {
+        pageMeta = result.data.pageMeta;
+        userPost = result.data.data;
+    }
+
 
     return (
         <>
@@ -29,9 +39,8 @@ export default async function Page({params}) {
                     </div>
                 </CardHeader>
                 <CardContent className="grid gap-6">
-                    {userPost.isSuccessful ? userPost.data.map(post => (
-                        <Post key={post.id} postInfo={post}/>
-                    )) : <NotAllow message={userPost.message}/>}
+                    {result.isSuccessful ? <PostList initialPageMeta={pageMeta} initialUserPost={userPost}/> :
+                        <NotAllow message={userPost.message}/>}
                 </CardContent>
             </Card>
         </>

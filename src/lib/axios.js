@@ -3,6 +3,7 @@
 import axios from "axios";
 import {cookies} from "next/headers";
 import {refreshAccessToken} from "@/lib/action";
+import {NextResponse} from "next/server";
 
 const config = {
     baseURL: process.env.NEXT_PUBLIC_API_URL,
@@ -11,16 +12,9 @@ const config = {
 
 const http = axios.create(config);
 
-const onRequest = (config) => {
+const onRequest = async (config) => {
     let accessToken = cookies().get("access-token")?.value;
-    if (!accessToken) {
-        refreshAccessToken().then(r => {
-            if (r.isSuccessful) {
-                cookies().set("access-token", r.data.accessToken, {maxAge: process.env.NEXT_PUBLIC_ACCESS_TOKEN_EXPIRY});
-                accessToken = r.data.accessToken;
-            }
-        })
-    }
+    const refreshToken = cookies().get("refresh-token")?.value;
 
     config.headers = {
         ...config.headers,

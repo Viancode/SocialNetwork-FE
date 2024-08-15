@@ -1,7 +1,8 @@
 "use client";
 import {
     DropdownMenu,
-    DropdownMenuContent, DropdownMenuItem,
+    DropdownMenuContent,
+    DropdownMenuItem,
     DropdownMenuLabel,
     DropdownMenuSeparator,
     DropdownMenuTrigger
@@ -9,16 +10,10 @@ import {
 import {Button} from "@/components/ui/button";
 import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/avatar";
 import Link from "next/link";
-import {LogOutIcon, RectangleEllipsis, SettingsIcon, UserIcon} from "lucide-react";
-import {useAuth} from "@/app/(overview)/components/auth/AuthContext";
+import {LogOutIcon, RectangleEllipsis, UserIcon} from "lucide-react";
 import {getAvatarFallback} from "@/lib/utils";
-import Spinner from "@/app/(overview)/components/ultils/Spinner";
 
-function UserAccount() {
-    const {userInfo, loading} = useAuth();
-    if (loading) {
-        return <Spinner/>
-    }
+function UserAccount({userInfo}) {
 
     return (
         <DropdownMenu>

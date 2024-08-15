@@ -1,6 +1,6 @@
 import {NextResponse} from "next/server";
 
-export function middleware(request) {
+export async function middleware(request) {
     const accessToken = request.cookies.get("access-token")?.value;
     const refreshToken = request.cookies.get("refresh-token")?.value;
     const callbackUrl = request.nextUrl.pathname;
@@ -10,12 +10,11 @@ export function middleware(request) {
         return NextResponse.next();
     }
 
-    if (!accessToken && !refreshToken) {
+    if (!accessToken || !refreshToken) {
         // return NextResponse.redirect(new URL(`/login?callbackUrl=${callbackUrl}`, request.url));
         return NextResponse.redirect(new URL(`/login`, request.url));
     }
 
-    // Nếu có ít nhất một trong hai token, cho phép request tiếp tục
     return NextResponse.next();
 }
 
