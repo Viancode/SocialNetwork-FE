@@ -8,7 +8,7 @@ import {Card, CardContent, CardHeader} from "@/components/ui/card";
 import {formatDistanceToNow} from "date-fns";
 import {Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious} from "@/components/ui/carousel";
 import Link from "next/link";
-import {useAuth} from "@/app/(overview)/components/auth/AuthContext";
+import {useAuth} from "@/app/(overview)/components/context/AuthContext";
 import Spinner from "@/app/(overview)/components/ultils/Spinner";
 import TextExpander from "@/app/(overview)/components/ultils/TextExpander";
 

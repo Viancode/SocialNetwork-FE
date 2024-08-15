@@ -3,9 +3,11 @@ import Post from "@/app/(overview)/components/post/Post";
 import {usePathname, useRouter, useSearchParams} from "next/navigation";
 import React, {useState, useEffect, useCallback} from "react";
 import Spinner from "@/app/(overview)/components/ultils/Spinner";
+import {usePost} from "@/app/(overview)/components/context/PostContext";
 
 function PostList({initialUserPost, initialPageMeta}) {
-    const [userPosts, setUserPosts] = useState(initialUserPost);
+    const {userPosts, setUserPosts} = usePost();
+    // const [userPosts, setUserPosts] = useState(initialUserPost);
     const [pageMeta, setPageMeta] = useState(initialPageMeta);
     const [isLoading, setIsLoading] = useState(false); // Loading state
     const searchParams = useSearchParams();
@@ -23,7 +25,7 @@ function PostList({initialUserPost, initialPageMeta}) {
             });
         }
         setPageMeta(initialPageMeta);
-    }, [initialUserPost, initialPageMeta]);
+    }, [initialUserPost, initialPageMeta, setUserPosts]);
 
     const loadMore = useCallback(async () => {
         if (pageMeta.hasNext && !isLoading) {

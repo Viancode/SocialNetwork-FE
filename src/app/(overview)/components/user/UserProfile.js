@@ -4,7 +4,7 @@ import {capitalizeFirstLetter, getAvatarFallback} from "@/lib/utils";
 import Image from "next/image";
 import {Briefcase, Calendar, Dna, FilePen, GraduationCap, Mail, MapPinned} from "lucide-react";
 import {Button} from "@/components/ui/button";
-import {useAuth} from "@/app/(overview)/components/auth/AuthContext";
+import {useAuth} from "@/app/(overview)/components/context/AuthContext";
 import Spinner from "@/app/(overview)/components/ultils/Spinner";
 
 function UserProfile({userProfile}) {
