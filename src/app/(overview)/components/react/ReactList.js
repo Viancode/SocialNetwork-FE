@@ -1,12 +1,13 @@
 "use client"
-import CommentItem from "@/app/(overview)/components/comment/CommentItem";
-import React, {useCallback, useEffect, useState} from "react";
-import Spinner from "@/app/(overview)/components/ultils/Spinner";
-import {usePathname, useRouter, useSearchParams} from "next/navigation";
-import {useComment} from "@/app/(overview)/components/context/CommentContext";
 
-function CommentList({initialComments, initialPageMeta}) {
-    const {comments, setComments} = useComment();
+import {useEffect, useState, useCallback} from "react";
+import {usePathname, useRouter, useSearchParams} from "next/navigation";
+import {useReaction} from "@/app/(overview)/components/context/ReactionContext";
+import ReactItem from "@/app/(overview)/components/react/ReactItem";
+import Spinner from "@/app/(overview)/components/ultils/Spinner";
+
+function ReactionList({initialReactions, initialPageMeta}) {
+    const {reactions, setReactions} = useReaction();
     const [pageMeta, setPageMeta] = useState(initialPageMeta);
     const [isLoading, setIsLoading] = useState(false);
     const searchParams = useSearchParams();
@@ -14,13 +15,13 @@ function CommentList({initialComments, initialPageMeta}) {
     const {replace} = useRouter();
 
     useEffect(() => {
-        setComments(prevComments => {
-            const newCommentIds = new Set(initialComments.map(comment => comment.commentId));
-            const uniquePrevComments = prevComments.filter(comment => !newCommentIds.has(comment.commentId));
-            return [...uniquePrevComments, ...initialComments];
+        setReactions(prevReactions => {
+            const newReactionIds = new Set(initialReactions.map(reaction => reaction.id));
+            const uniquePrevReactions = prevReactions.filter(reaction => !newReactionIds.has(reaction.id));
+            return [...uniquePrevReactions, ...initialReactions];
         });
         setPageMeta(initialPageMeta);
-    }, [initialComments, initialPageMeta, setComments]);
+    }, [initialReactions, initialPageMeta, setReactions]);
 
     const loadMore = useCallback(async () => {
         if (pageMeta.hasNext && !isLoading) {
@@ -35,8 +36,8 @@ function CommentList({initialComments, initialPageMeta}) {
     return (
         <>
             <div>
-                {comments.map(comment => (
-                    <CommentItem key={comment.commentId} comment={comment}/>
+                {reactions.map(reaction => (
+                    <ReactItem key={reaction.id} reactInfo={reaction}/>
                 ))}
             </div>
             {pageMeta.hasNext && (
@@ -58,4 +59,4 @@ function CommentList({initialComments, initialPageMeta}) {
     );
 }
 
-export default CommentList;
+export default ReactionList;

@@ -6,6 +6,8 @@ import Sidebar from "@/app/(overview)/components/layout/Sidebar";
 import {ThemeProvider} from "next-themes";
 import {AuthProvider} from "@/app/(overview)/components/context/AuthContext";
 import {PostProvider} from "@/app/(overview)/components/context/PostContext";
+import {CommentProvider} from "@/app/(overview)/components/context/CommentContext";
+import {ReactionProvider} from "@/app/(overview)/components/context/ReactionContext";
 
 const inter = Inter({subsets: ["latin"]});
 
@@ -26,7 +28,11 @@ export default function RootLayout({children}) {
         >
             <AuthProvider>
                 <PostProvider>
-                    {children}
+                    <CommentProvider>
+                        <ReactionProvider>
+                            {children}
+                        </ReactionProvider>
+                    </CommentProvider>
                 </PostProvider>
             </AuthProvider>
         </ThemeProvider>

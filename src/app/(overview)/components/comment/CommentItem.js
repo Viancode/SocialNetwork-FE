@@ -6,6 +6,7 @@ import {ArrowDown, Heart, Reply} from "lucide-react";
 import Image from "next/image";
 import {Button} from "@/components/ui/button";
 import Link from "next/link";
+import TextExpander from "@/app/(overview)/components/ultils/TextExpander";
 
 function CommentItem({comment}) {
     const {
@@ -47,7 +48,7 @@ function CommentItem({comment}) {
             </div>
             <div className="mt-4 text-sm">
                 <p>
-                    {content}
+                    <TextExpander>{content}</TextExpander>
                 </p>
             </div>
             {image && (

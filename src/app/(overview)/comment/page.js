@@ -22,6 +22,7 @@ export default async function Page({searchParams}) {
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
             <div className="bg-background p-6 rounded-lg shadow-lg w-full max-w-3xl flex flex-col h-[80vh]">
                 <h2 className="text-xl font-bold mb-4">Comments</h2>
+
                 {!result.isSuccessful ? <SomethingWentWrong/> : (
                     <ScrollArea className="flex-grow">
                         {!result.isSuccessful ? <SomethingWentWrong/> :

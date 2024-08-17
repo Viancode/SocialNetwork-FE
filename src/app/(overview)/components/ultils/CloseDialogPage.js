@@ -2,11 +2,17 @@
 
 import {useRouter} from "next/navigation";
 import {Button} from "@/components/ui/button";
+import {useComment} from "@/app/(overview)/components/context/CommentContext";
+import {useReaction} from "@/app/(overview)/components/context/ReactionContext";
 
 function CloseDialogPage() {
     const router = useRouter();
+    const {setComments} = useComment();
+    const {setReactions} = useReaction();
 
     const handleClose = () => {
+        setComments([]);
+        setReactions([]);
         router.back();
     };
 

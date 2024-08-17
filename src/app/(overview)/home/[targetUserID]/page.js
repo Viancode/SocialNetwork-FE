@@ -40,7 +40,7 @@ export default async function Page({params, searchParams}) {
                 </CardHeader>
                 <CardContent className="grid gap-6">
                     {result.isSuccessful ? <PostList initialPageMeta={pageMeta} initialUserPost={userPost}/> :
-                        <NotAllow message={userPost.message}/>}
+                        <NotAllow message={"You are not allowed to see this user post"}/>}
                 </CardContent>
             </Card>
         </>

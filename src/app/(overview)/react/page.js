@@ -4,10 +4,11 @@ import React from "react";
 import {getReactionInPost} from "@/lib/data";
 import SomethingWentWrong from "@/app/(overview)/components/ultils/SomethingWentWrong";
 import {ScrollArea} from "@/components/ui/scroll-area";
+import ReactList from "@/app/(overview)/components/react/ReactList";
 
 export default async function Page({searchParams}) {
     console.log(searchParams.postId)
-    const result = await getReactionInPost(1, searchParams.postId);
+    const result = await getReactionInPost(searchParams?.page, searchParams.postId);
 
     let pageMeta = null;
     let reactions = null;
@@ -23,9 +24,9 @@ export default async function Page({searchParams}) {
                 <h2 className="text-xl font-bold mb-4">Reactions</h2>
                 {!result.isSuccessful ? <SomethingWentWrong/> : (
                     <ScrollArea className="flex-grow">
-                        {reactions.map(react => {
-                            return <ReactItem key={react.id} reactInfo={react}/>
-                        })}
+                        {!result.isSuccessful ? <SomethingWentWrong/> : (
+                            <ReactList initialReactions={reactions} initialPageMeta={pageMeta}/>
+                        )}
                     </ScrollArea>
                 )}
                 <div className="mt-6">
