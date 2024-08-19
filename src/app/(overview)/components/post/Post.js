@@ -11,6 +11,9 @@ import Link from "next/link";
 import {useAuth} from "@/app/(overview)/components/context/AuthContext";
 import Spinner from "@/app/(overview)/components/ultils/Spinner";
 import TextExpander from "@/app/(overview)/components/ultils/TextExpander";
+import {useState} from "react";
+import {toast} from "sonner";
+import {reactPost} from "@/lib/action";
 
 function Post({postInfo}) {
     const {currentUserId, loading} = useAuth();
@@ -26,11 +29,30 @@ function Post({postInfo}) {
         photoResponses,
         numberOfComments,
         numberOfReacts,
-        tagUsers
+        tagUsers,
+        isReacted
     } = postInfo;
+
+    const [isReact, setIsReact] = useState(isReacted);
+    const [numOfReacts, setNumOfReacts] = useState(numberOfReacts);
 
     if (loading) {
         return <Spinner/>
+    }
+
+    async function handleReact() {
+        if (isReact === true) {
+            setNumOfReacts(numOfReacts - 1);
+        } else {
+            setNumOfReacts(numOfReacts + 1);
+        }
+        setIsReact(!isReact);
+        const result = await reactPost(id)
+
+        if (!result.isSuccessful) {
+            console.log(result.message)
+            toast.error("Error while reacting post");
+        }
     }
 
     return (
@@ -88,9 +110,16 @@ function Post({postInfo}) {
                     <div className="flex items-center justify-between p-4">
                         <div className="flex items-center gap-4">
                             <div className="flex items-center gap-1 text-sm">
-                                <Heart className="w-4 h-4"/>
+                                <Button
+                                    variant="ghost"
+                                    size="sm"
+                                    className="p-0"
+                                    onClick={handleReact}
+                                >
+                                    <Heart className={`w-4 h-4 ${isReact ? 'fill-current text-black' : ''}`}/>
+                                </Button>
                                 <Link href={`/react?postId=${id}`}>
-                                    <span>{`${numberOfReacts} reactions`}</span>
+                                    <span>{`${numOfReacts} reactions`}</span>
                                 </Link>
                             </div>
                             <Link href={`/comment?postId=${id}`}>
@@ -109,35 +138,6 @@ function Post({postInfo}) {
                                 })}</span>
                                 <Tag className="w-4 h-4"/>
                             </div>
-                            {/*<DropdownMenu>*/}
-                            {/*    <DropdownMenuTrigger asChild>*/}
-                            {/*        <Button variant="ghost" size="icon">*/}
-                            {/*            <Smile className="w-5 h-5"/>*/}
-                            {/*        </Button>*/}
-                            {/*    </DropdownMenuTrigger>*/}
-                            {/*    <DropdownMenuContent align="end">*/}
-                            {/*        <DropdownMenuItem>*/}
-                            {/*            <ThumbsUp className="w-4 h-4 mr-2"/>*/}
-                            {/*            Like*/}
-                            {/*        </DropdownMenuItem>*/}
-                            {/*        <DropdownMenuItem>*/}
-                            {/*            <Frown className="w-4 h-4 mr-2"/>*/}
-                            {/*            Sad*/}
-                            {/*        </DropdownMenuItem>*/}
-                            {/*        <DropdownMenuItem>*/}
-                            {/*            <Smile className="w-4 h-4 mr-2"/>*/}
-                            {/*            Wow*/}
-                            {/*        </DropdownMenuItem>*/}
-                            {/*        <DropdownMenuItem>*/}
-                            {/*            <Angry className="w-4 h-4 mr-2"/>*/}
-                            {/*            Angry*/}
-                            {/*        </DropdownMenuItem>*/}
-                            {/*        <DropdownMenuItem>*/}
-                            {/*            <Heart className="w-4 h-4 mr-2"/>*/}
-                            {/*            Love*/}
-                            {/*        </DropdownMenuItem>*/}
-                            {/*    </DropdownMenuContent>*/}
-                            {/*</DropdownMenu>*/}
                         </div>
                     </div>
                 </CardContent>

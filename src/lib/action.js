@@ -165,3 +165,38 @@ export async function resetPassword(new_password, token) {
             }
         });
 }
+
+export async function reactPost(postId) {
+    console.log("postId", postId)
+    return await http
+        .post(`/post_reaction`, {postId: postId, reactionType: "LIKE"})
+        .then((res) => {
+            return {
+                isSuccessful: true,
+                data: res.data.result
+            };
+        })
+        .catch((err) => {
+            return {
+                isSuccessful: false,
+                message: err.response.data.message
+            };
+        });
+}
+
+export async function reactComment(commentId) {
+    return await http
+        .post(`/comment_reaction`, {commentId: commentId, reactionType: "LIKE"})
+        .then((res) => {
+            return {
+                isSuccessful: true,
+                data: res.data.result
+            };
+        })
+        .catch((err) => {
+            return {
+                isSuccessful: false,
+                message: err.response.data.message
+            };
+        });
+}

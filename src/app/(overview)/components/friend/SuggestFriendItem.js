@@ -7,7 +7,7 @@ function SuggestFriendItem({suggestFriendInfo}) {
     const {id, username, avatar, mutualFriends} = suggestFriendInfo;
 
     return (
-        <div className="flex items-center gap-4 mb-4">
+        <div className="flex items-center gap-4 mb-4 mr-3">
             <Avatar className="h-10 w-10">
                 <AvatarImage src={avatar}/>
                 <AvatarFallback>{getAvatarFallback(username)}</AvatarFallback>
@@ -19,7 +19,7 @@ function SuggestFriendItem({suggestFriendInfo}) {
                 <p className="text-muted-foreground text-sm">{`${mutualFriends} mutual friend`}</p>
             </div>
             <Button variant="outline" size="sm" className="ml-auto">
-                Add
+                Send
             </Button>
         </div>
     )

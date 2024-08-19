@@ -7,7 +7,6 @@ const CommentContext = createContext();
 function CommentProvider({children}) {
     const [comments, setComments] = useState([]);
 
-    console.log("comments", comments);
     return (
         <CommentContext.Provider value={{comments, setComments}}>
             {children}

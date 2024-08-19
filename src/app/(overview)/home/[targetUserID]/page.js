@@ -1,7 +1,5 @@
 import {Card, CardContent, CardHeader} from "@/components/ui/card";
-import Post from "@/app/(overview)/components/post/Post";
-import UserForm from "@/app/(overview)/components/user/UserForm";
-import {getCommentInPost, getUserPost, getUserProfile} from "@/lib/data";
+import {getUserPost, getUserProfile} from "@/lib/data";
 import NotAllow from "@/app/(overview)/components/ultils/NotAllow";
 import UserProfile from "@/app/(overview)/components/user/UserProfile";
 import PostList from "@/app/(overview)/components/post/PostList";
