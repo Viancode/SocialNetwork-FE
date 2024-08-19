@@ -3,6 +3,7 @@ import {getUserPost, getUserProfile} from "@/lib/data";
 import NotAllow from "@/app/(overview)/components/ultils/NotAllow";
 import UserProfile from "@/app/(overview)/components/user/UserProfile";
 import PostList from "@/app/(overview)/components/post/PostList";
+import ScrollToTop from "@/app/(overview)/components/ultils/ScrollToTop";
 
 export default async function Page({params, searchParams}) {
     const targetUserId = params.targetUserID;
@@ -41,6 +42,7 @@ export default async function Page({params, searchParams}) {
                         <NotAllow message={"You are not allowed to see this user post"}/>}
                 </CardContent>
             </Card>
+            <ScrollToTop/>
         </>
     )
 }

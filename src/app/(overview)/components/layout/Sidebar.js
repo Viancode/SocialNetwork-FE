@@ -1,7 +1,7 @@
 import {PlusIcon} from "lucide-react";
 import {Button} from "@/components/ui/button";
 import UserCard from "@/app/(overview)/components/user/UserCard";
-import SuggestFriendList from "@/app/(overview)/components/friend/SuggestFriendList";
+import SuggestFriendList from "@/app/(overview)/components/friend/suggest/SuggestFriendList";
 
 function Sidebar() {
     return (

@@ -200,3 +200,88 @@ export async function reactComment(commentId) {
             };
         });
 }
+
+export async function deleteRequestFriend(userId) {
+    return await http
+        .delete(`/friend/delete_request`, {params: {user_id: userId}})
+        .then((res) => {
+            return {
+                isSuccessful: true,
+                data: res.data.result
+            };
+        })
+        .catch((err) => {
+            return {
+                isSuccessful: false,
+                message: err.response.data.message
+            };
+        });
+}
+
+export async function acceptRequestFriend(userId) {
+    return await http
+        .post(`/friend/accept_request`, {user_id: userId})
+        .then((res) => {
+            return {
+                isSuccessful: true,
+                data: res.data.result
+            };
+        })
+        .catch((err) => {
+            return {
+                isSuccessful: false,
+                message: err.response.data.message
+            };
+        });
+}
+
+export async function rejectRequestFriend(userId) {
+    return await http
+        .post(`/friend/reject_request`, {user_id: userId})
+        .then((res) => {
+            return {
+                isSuccessful: true,
+                data: res.data.result
+            };
+        })
+        .catch((err) => {
+            return {
+                isSuccessful: false,
+                message: err.response.data.message
+            };
+        });
+}
+
+export async function unFriend(userId) {
+    return await http
+        .delete(`/friend/delete_friend`, {params: {user_id: userId}})
+        .then((res) => {
+            return {
+                isSuccessful: true,
+                data: res.data.result
+            };
+        })
+        .catch((err) => {
+            return {
+                isSuccessful: false,
+                message: err.response.data.message
+            };
+        });
+}
+
+export async function unBlock(userId) {
+    return await http
+        .post(`/friend/unblock`, null, {params: {user_id: userId}})
+        .then((res) => {
+            return {
+                isSuccessful: true,
+                data: res.data.result
+            };
+        })
+        .catch((err) => {
+            return {
+                isSuccessful: false,
+                message: err.response.data.message
+            };
+        });
+}

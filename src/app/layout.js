@@ -1,8 +1,6 @@
 import {Inter} from "next/font/google";
 import "./globals.css";
 import {Toaster} from "@/components/ui/sonner";
-import Header from "@/app/(overview)/components/layout/Header";
-import Sidebar from "@/app/(overview)/components/layout/Sidebar";
 import {ThemeProvider} from "next-themes";
 import {AuthProvider} from "@/app/(overview)/components/context/AuthContext";
 import {PostProvider} from "@/app/(overview)/components/context/PostContext";

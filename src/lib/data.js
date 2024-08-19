@@ -154,3 +154,71 @@ export async function getChildComment(parent_comment_id, post_id) {
             };
         });
 }
+
+export async function getFriendRequest(page = 1) {
+    return await http
+        .get("/friend/get_list_send_requests", {params: {page}})
+        .then((res) => {
+            return {
+                isSuccessful: true,
+                data: res.data.result
+            };
+        })
+        .catch((err) => {
+            return {
+                isSuccessful: false,
+                message: err.response.data.message
+            };
+        });
+}
+
+export async function getReceivedFriendRequest(page = 1) {
+    return await http
+        .get("/friend/get_list_receive_requests", {params: {page}})
+        .then((res) => {
+            return {
+                isSuccessful: true,
+                data: res.data.result
+            };
+        })
+        .catch((err) => {
+            return {
+                isSuccessful: false,
+                message: err.response.data.message
+            };
+        });
+}
+
+export async function getListFriend(page = 1) {
+    return await http
+        .get("/friend/get_list_friends", {params: {page}})
+        .then((res) => {
+            return {
+                isSuccessful: true,
+                data: res.data.result
+            };
+        })
+        .catch((err) => {
+            return {
+                isSuccessful: false,
+                message: err.response.data.message
+            };
+        });
+}
+
+export async function getListBlock(page = 1) {
+    return await http
+        .get("/friend/get_list_block", {params: {page}})
+        .then((res) => {
+            return {
+                isSuccessful: true,
+                data: res.data.result
+            };
+        })
+        .catch((err) => {
+            return {
+                isSuccessful: false,
+                message: err.response.data.message
+            };
+        });
+}

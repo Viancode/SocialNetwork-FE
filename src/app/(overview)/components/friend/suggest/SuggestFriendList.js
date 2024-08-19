@@ -1,7 +1,7 @@
 "use client"
 import React, {useState, useEffect} from 'react';
 import {Card, CardContent, CardFooter, CardHeader} from "@/components/ui/card";
-import SuggestFriendItem from "@/app/(overview)/components/friend/SuggestFriendItem";
+import SuggestFriendItem from "@/app/(overview)/components/friend/suggest/SuggestFriendItem";
 import {ScrollArea} from "@/components/ui/scroll-area";
 import {getSuggestFriend} from "@/lib/data";
 import SomethingWentWrong from "@/app/(overview)/components/ultils/SomethingWentWrong";
