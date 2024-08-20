@@ -1,5 +1,4 @@
-import ReceivedFriendItem from "@/app/(overview)/components/friend/ReceivedFriendItem";
-import {getFriendRequest, getReceivedFriendRequest} from "@/lib/data";
+import {getReceivedFriendRequest} from "@/lib/data";
 import SomethingWentWrong from "@/app/(overview)/components/ultils/SomethingWentWrong";
 import FriendList from "@/app/(overview)/components/friend/FriendList";
 import ScrollToTop from "@/app/(overview)/components/ultils/ScrollToTop";
@@ -9,17 +8,17 @@ export default async function Page({searchParams}) {
     const result = await getReceivedFriendRequest(page);
 
     let pageMeta = null;
-    let friendRequests = null;
+    let friends = null;
 
     if (result.isSuccessful) {
         pageMeta = result.data.pageMeta;
-        friendRequests = result.data.data;
+        friends = result.data.data;
     }
 
     return (
         <div className="grid gap-4 pt-6">
             {!result.isSuccessful ? <SomethingWentWrong/> : (
-                <FriendList initialFriends={friendRequests} initialPageMeta={pageMeta} type="received"/>
+                <FriendList initialFriends={friends} initialPageMeta={pageMeta} type="received"/>
             )}
             <ScrollToTop/>
         </div>

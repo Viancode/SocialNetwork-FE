@@ -222,3 +222,37 @@ export async function getListBlock(page = 1) {
             };
         });
 }
+
+export async function searchFriend(page = 1, keyword) {
+    return http
+        .get("/friend/find_friend", {params: {page, keyword}})
+        .then((res) => {
+            return {
+                isSuccessful: true,
+                data: res.data.result
+            };
+        })
+        .catch((err) => {
+            return {
+                isSuccessful: false,
+                message: err.response.data.message
+            };
+        });
+}
+
+export async function searchUser(page = 1, keyword) {
+    return http
+        .get("/search", {params: {page, keyword}})
+        .then((res) => {
+            return {
+                isSuccessful: true,
+                data: res.data.result
+            };
+        })
+        .catch((err) => {
+            return {
+                isSuccessful: false,
+                message: err.response.data.message
+            };
+        });
+}

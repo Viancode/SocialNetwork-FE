@@ -1,20 +1,31 @@
-import {Input} from "@/components/ui/input";
-import {Button} from "@/components/ui/button";
-import SearchFriendItem from "@/app/(overview)/components/friend/SearchFriendItem";
+import Search from "@/app/(overview)/components/ultils/Search";
+import SomethingWentWrong from "@/app/(overview)/components/ultils/SomethingWentWrong";
+import FriendList from "@/app/(overview)/components/friend/FriendList";
+import ScrollToTop from "@/app/(overview)/components/ultils/ScrollToTop";
+import {searchUser} from "@/lib/data";
 
-export default function Page() {
+export default async function Page({searchParams}) {
+    const query = searchParams?.query || '';
+
+    const page = searchParams?.page;
+    const result = await searchUser(page, query);
+
+    let pageMeta = null;
+    let friends = null;
+
+    if (result.isSuccessful) {
+        pageMeta = result.data.pageMeta;
+        friends = result.data.data;
+    }
+
     return (
         <div className="flex flex-col gap-4 pt-6">
-            <form className="flex items-center gap-4">
-                <Input type="search" placeholder="Search for user..." className="flex-1"/>
-                <Button type="submit">Search</Button>
-            </form>
+            <Search/>
             <div className="grid gap-4">
-                <SearchFriendItem/>
-                <SearchFriendItem/>
-                <SearchFriendItem/>
-                <SearchFriendItem/>
-                <SearchFriendItem/>
+                {!result.isSuccessful ? <SomethingWentWrong/> : (
+                    <FriendList initialFriends={friends} initialPageMeta={pageMeta} type="search"/>
+                )}
+                <ScrollToTop/>
             </div>
         </div>
     );

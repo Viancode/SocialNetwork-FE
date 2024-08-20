@@ -4,11 +4,14 @@ import {useCallback, useEffect, useState} from "react";
 import {usePathname, useRouter, useSearchParams} from "next/navigation";
 import Spinner from "@/app/(overview)/components/ultils/Spinner";
 import FriendItem from "@/app/(overview)/components/friend/FriendItem";
-import AcceptAndRejectButton from "@/app/(overview)/components/friend/button/AcceptAndRejectButton";
-import CancelRequestButton from "@/app/(overview)/components/friend/button/CancelRequestButton";
-import UnFriendButton from "@/app/(overview)/components/friend/button/UnfriendButton";
+import RejectButton from "@/app/(overview)/components/friend/button/RejectButton";
+import UnFriendButton from "@/app/(overview)/components/friend/button/UnFriendButton";
 import UnBlockButton from "@/app/(overview)/components/friend/button/UnBlockButton";
 import SendRequestButton from "@/app/(overview)/components/friend/button/SendRequestButton";
+import DeleteRequestButton from "@/app/(overview)/components/friend/button/DeleteRequestButton";
+import AcceptButton from "@/app/(overview)/components/friend/button/AcceptButton";
+import BlockButton from "@/app/(overview)/components/friend/button/BlockButton";
+import CloseRelationButton from "@/app/(overview)/components/friend/button/CloseRelationButton";
 
 function FriendList({initialFriends, initialPageMeta, type}) {
     const [friends, setFriends] = useState(initialFriends);
@@ -59,11 +62,49 @@ function FriendList({initialFriends, initialPageMeta, type}) {
             <div className="grid gap-6">
                 {friends.map(friend => (
                     <FriendItem key={friend.id} friendInfo={friend}>
-                        {type === "request" && <CancelRequestButton userId={friend.id}/>}
-                        {type === "received" && <AcceptAndRejectButton userId={friend.id}/>}
-                        {type === "list" && <UnFriendButton userId={friend.id}/>}
+                        {type === "request" && <DeleteRequestButton userId={friend.id}/>}
+
+                        {type === "received" && (
+                            <div className="flex gap-2">
+                                <AcceptButton userId={friend.id}/>
+                                <RejectButton userId={friend.id}/>
+                            </div>
+                        )}
+
+                        {type === "list" && (
+                            <div className="flex gap-2">
+                                <CloseRelationButton userId={friend.id} closeRelationship={friend.closeRelationship}/>
+                                <UnFriendButton userId={friend.id}/>
+                            </div>
+                        )}
+
                         {type === "block" && <UnBlockButton userId={friend.id}/>}
-                        {type === "search" && <SendRequestButton userId={friend.id}/>}
+
+                        {type === "search" && (
+                            <div className="flex gap-2">
+                                {friend.status === "FRIEND" && (
+                                    <div className="flex gap-2">
+                                        <CloseRelationButton userId={friend.id}
+                                                             closeRelationship={friend.closeRelationship}/>
+                                        <UnFriendButton userId={friend.id}/>
+                                    </div>
+                                )}
+                                {friend.status === "BLOCK" && <UnBlockButton userId={friend.id}/>}
+                                {friend.status === "REQUESTING" && <DeleteRequestButton userId={friend.id}/>}
+                                {friend.status === "RECEIVED" && (
+                                    <div className="flex gap-2">
+                                        <AcceptButton userId={friend.id}/>
+                                        <RejectButton userId={friend.id}/>
+                                    </div>
+                                )}
+                                {friend.status === null && (
+                                    <div className="flex gap-2">
+                                        <SendRequestButton userId={friend.id}/>
+                                        <BlockButton userId={friend.id}/>
+                                    </div>
+                                )}
+                            </div>
+                        )}
                     </FriendItem>
                 ))}
             </div>

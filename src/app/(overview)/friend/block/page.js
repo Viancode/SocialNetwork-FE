@@ -8,16 +8,16 @@ export default async function Page({searchParams}) {
     const result = await getListBlock(page);
 
     let pageMeta = null;
-    let friendRequests = null;
+    let friends = null;
 
     if (result.isSuccessful) {
         pageMeta = result.data.pageMeta;
-        friendRequests = result.data.data;
+        friends = result.data.data;
     }
     return (
         <div className="grid gap-4 pt-6">
             {!result.isSuccessful ? <SomethingWentWrong/> : (
-                <FriendList initialFriends={friendRequests} initialPageMeta={pageMeta} type="block"/>
+                <FriendList initialFriends={friends} initialPageMeta={pageMeta} type="block"/>
             )}
             <ScrollToTop/>
         </div>

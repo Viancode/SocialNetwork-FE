@@ -220,7 +220,7 @@ export async function deleteRequestFriend(userId) {
 
 export async function acceptRequestFriend(userId) {
     return await http
-        .post(`/friend/accept_request`, {user_id: userId})
+        .post(`/friend/accept_request`, null, {params: {user_id: userId}})
         .then((res) => {
             return {
                 isSuccessful: true,
@@ -237,7 +237,7 @@ export async function acceptRequestFriend(userId) {
 
 export async function rejectRequestFriend(userId) {
     return await http
-        .post(`/friend/reject_request`, {user_id: userId})
+        .post(`/friend/refuse_request`, null, {params: {user_id: userId}})
         .then((res) => {
             return {
                 isSuccessful: true,
@@ -285,3 +285,57 @@ export async function unBlock(userId) {
             };
         });
 }
+
+export async function sendRequestFriend(userId) {
+    return await http
+        .post(`/friend/send_request`, null, {params: {user_id: userId}})
+        .then((res) => {
+            return {
+                isSuccessful: true,
+                data: res.data.result
+            };
+        })
+        .catch((err) => {
+            return {
+                isSuccessful: false,
+                message: err.response.data.message
+            };
+        });
+}
+
+export async function block(userId) {
+    return await http
+        .post(`/friend/block`, null, {params: {user_id: userId}})
+        .then((res) => {
+            return {
+                isSuccessful: true,
+                data: res.data.result
+            };
+        })
+        .catch((err) => {
+            return {
+                isSuccessful: false,
+                message: err.response.data.message
+            };
+        });
+}
+
+export async function setCloseRelation(userId, closeRelationship) {
+    return await http
+        .post(`/close_relationship`, {targetUserId: userId, closeRelationshipName: closeRelationship})
+        .then((res) => {
+            return {
+                isSuccessful: true,
+                data: res.data.result
+            };
+        })
+        .catch((err) => {
+            return {
+                isSuccessful: false,
+                message: err.response.data.message
+            };
+        });
+}
+
+
+

@@ -1,10 +1,10 @@
 import {Button} from "@/components/ui/button";
-import {deleteRequestFriend} from "@/lib/action";
+import {rejectRequestFriend} from "@/lib/action";
 import {toast} from "sonner";
 
-function CancelRequestButton({userId}) {
-    async function handleCancelRequest() {
-        const result = await deleteRequestFriend(userId);
+function RejectButton({userId}) {
+    async function handleRejectRequest() {
+        const result = await rejectRequestFriend(userId);
         if (result.isSuccessful) {
             toast.success("Request has been canceled");
         } else {
@@ -13,10 +13,10 @@ function CancelRequestButton({userId}) {
     }
 
     return (
-        <Button variant="outline" size="sm" onClick={handleCancelRequest}>
+        <Button variant="outline" size="sm" onClick={handleRejectRequest}>
             Cancel Request
         </Button>
     )
 }
 
-export default CancelRequestButton;
+export default RejectButton;

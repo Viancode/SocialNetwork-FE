@@ -11,21 +11,21 @@ export default async function Page({searchParams}) {
     const result = await getListFriend(page);
 
     let pageMeta = null;
-    let friendRequests = null;
+    let friends = null;
 
     if (result.isSuccessful) {
         pageMeta = result.data.pageMeta;
-        friendRequests = result.data.data;
+        friends = result.data.data;
     }
 
     return (
         <div className="grid gap-4 pt-6">
-            <form className="flex items-center gap-4">
-                <Input type="search" placeholder="Search for friends..." className="flex-1"/>
-                <Button type="submit">Search</Button>
-            </form>
+            {/*<form className="flex items-center gap-4">*/}
+            {/*    <Input type="search" placeholder="Search for friends..." className="flex-1"/>*/}
+            {/*    <Button type="submit">Search</Button>*/}
+            {/*</form>*/}
             {!result.isSuccessful ? <SomethingWentWrong/> : (
-                <FriendList initialFriends={friendRequests} initialPageMeta={pageMeta} type="list"/>
+                <FriendList initialFriends={friends} initialPageMeta={pageMeta} type="list"/>
             )}
             <ScrollToTop/>
         </div>
