@@ -4,6 +4,10 @@ import {useState} from "react";
 
 function TextExpander({children}) {
     const [isExpanded, setIsExpanded] = useState(false);
+    if (!children) {
+        return <span></span>;
+    }
+
     if (children.split(" ").length < 40) {
         return <span>{children}</span>;
     }

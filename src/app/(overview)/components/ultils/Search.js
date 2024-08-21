@@ -30,7 +30,7 @@ function Search() {
                 }}
                 defaultValue={searchParams.get('query')?.toString()}
             />
-            <Button type="submit">Search</Button>
+            {/*<Button type="submit">Search</Button>*/}
         </form>
     )
 }

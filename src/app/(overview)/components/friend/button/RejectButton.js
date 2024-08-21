@@ -14,7 +14,7 @@ function RejectButton({userId}) {
 
     return (
         <Button variant="outline" size="sm" onClick={handleRejectRequest}>
-            Cancel Request
+            Reject
         </Button>
     )
 }

@@ -337,5 +337,58 @@ export async function setCloseRelation(userId, closeRelationship) {
         });
 }
 
+export async function createPost(formData) {
+    return await http
+        .post(`/post`, formData)
+        .then((res) => {
+            return {
+                isSuccessful: true,
+                data: res.data.result
+            };
+        })
+        .catch((err) => {
+            return {
+                isSuccessful: false,
+                message: err.response.data.message
+            };
+        });
+
+}
+
+export async function deletePost(post_id) {
+    return await http
+        .delete(`/post`, {params: {post_id}})
+        .then((res) => {
+            return {
+                isSuccessful: true,
+                data: res.data.result
+            };
+        })
+        .catch((err) => {
+            return {
+                isSuccessful: false,
+                message: err.response.data.message
+            };
+        });
+}
+
+export async function editProfile(formData) {
+    return await http
+        .put(`/profile`, formData)
+        .then((res) => {
+            return {
+                isSuccessful: true,
+                data: res.data.result
+            };
+        })
+        .catch((err) => {
+            return {
+                isSuccessful: false,
+                message: err.response.data.message
+            };
+        });
+
+}
+
 
 

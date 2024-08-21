@@ -14,6 +14,7 @@ import TextExpander from "@/app/(overview)/components/ultils/TextExpander";
 import {useState} from "react";
 import {toast} from "sonner";
 import {reactPost} from "@/lib/action";
+import MoreActionPost from "@/app/(overview)/components/post/MoreActionPost";
 
 function Post({postInfo}) {
     const {currentUserId, loading} = useAuth();
@@ -78,10 +79,7 @@ function Post({postInfo}) {
                             </div>
                         </div>
                         {currentUserId === String(userId) && (
-                            <Button variant="outline" size="sm">
-                                <FilePen className="w-4 h-4 mr-2"/>
-                                Edit
-                            </Button>
+                            <MoreActionPost postInfo={postInfo}/>
                         )}
                     </div>
                 </CardHeader>
@@ -96,7 +94,7 @@ function Post({postInfo}) {
                                             {photoResponses.map((photo) => (
                                                 <CarouselItem key={photo.id}>
                                                     <Image width={1000} height={500} src={photo.url} alt="Post Image"
-                                                           className="rounded-lg"/>
+                                                           className="rounded-lg max-h-[500px]"/>
                                                 </CarouselItem>
                                             ))}
                                         </CarouselContent>
@@ -131,11 +129,13 @@ function Post({postInfo}) {
                         </div>
                         <div className="flex items-center gap-2">
                             <div className="flex items-center gap-1 text-sm">
-                                <span>{tagUsers.map(user => {
-                                    return <Link key={user.id} href={`/home/${user.id}`}>
-                                        {`${user.username} `}
-                                    </Link>
-                                })}</span>
+                                {tagUsers.map(user => {
+                                    return (<Card key={user.id} className="p-1">
+                                        <Link href={`/home/${user.id}`}>
+                                            {`${user.username} `}
+                                        </Link>
+                                    </Card>)
+                                })}
                                 <Tag className="w-4 h-4"/>
                             </div>
                         </div>

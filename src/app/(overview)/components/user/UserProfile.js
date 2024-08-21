@@ -6,6 +6,7 @@ import {Briefcase, Calendar, Dna, FilePen, GraduationCap, Mail, MapPinned} from 
 import {Button} from "@/components/ui/button";
 import {useAuth} from "@/app/(overview)/components/context/AuthContext";
 import Spinner from "@/app/(overview)/components/ultils/Spinner";
+import ProfileForm from "@/app/(overview)/components/ProfileForm";
 
 function UserProfile({userProfile}) {
     const {currentUserId, loading} = useAuth();
@@ -37,10 +38,11 @@ function UserProfile({userProfile}) {
                         <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold">{userProfile.username}</h1>
                     </div>
                     {currentUserId === userProfile.id && (
-                        <Button variant="outline" size="sm">
-                            <FilePen className="w-4 h-4 mr-2"/>
-                            Edit
-                        </Button>
+                        // <Button variant="outline" size="sm">
+                        //     <FilePen className="w-4 h-4 mr-2"/>
+                        //     Edit
+                        // </Button>
+                        <ProfileForm userProfile={userProfile}/>
                     )}
                 </div>
                 <div className="grid sm:grid-cols-2 gap-6">
