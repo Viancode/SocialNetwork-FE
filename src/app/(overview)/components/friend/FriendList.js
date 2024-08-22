@@ -75,6 +75,7 @@ function FriendList({initialFriends, initialPageMeta, type}) {
                             <div className="flex gap-2">
                                 <CloseRelationButton userId={friend.id} closeRelationship={friend.closeRelationship}/>
                                 <UnFriendButton userId={friend.id}/>
+                                <BlockButton userId={friend.id}/>
                             </div>
                         )}
 
@@ -87,6 +88,7 @@ function FriendList({initialFriends, initialPageMeta, type}) {
                                         <CloseRelationButton userId={friend.id}
                                                              closeRelationship={friend.closeRelationship}/>
                                         <UnFriendButton userId={friend.id}/>
+                                        <BlockButton userId={friend.id}/>
                                     </div>
                                 )}
                                 {friend.status === "BLOCK" && <UnBlockButton userId={friend.id}/>}
