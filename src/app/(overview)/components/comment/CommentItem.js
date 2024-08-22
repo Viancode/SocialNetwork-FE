@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/avatar";
 import {formatDistanceToNow} from 'date-fns';
 import {getAvatarFallback} from "@/lib/utils";
-import {ArrowDown, ArrowUp, FilePen, Heart} from "lucide-react";
+import {ArrowDown, ArrowUp, FilePen, Heart, Reply} from "lucide-react";
 import Image from "next/image";
 import {Button} from "@/components/ui/button";
 import Link from "next/link";
@@ -12,6 +12,10 @@ import {toast} from "sonner";
 import {reactComment} from "@/lib/action";
 import {useAuth} from "@/app/(overview)/components/context/AuthContext";
 import Spinner from "@/app/(overview)/components/ultils/Spinner";
+import MoreActionComment from "@/app/(overview)/components/comment/MoreActionComment";
+import {redirect, useRouter} from "next/navigation";
+import {Dialog, DialogContent, DialogTrigger} from "@/components/ui/dialog";
+import CommentForm from "@/app/(overview)/components/comment/CommentForm";
 
 function CommentItem({comment}) {
     const {
@@ -34,6 +38,7 @@ function CommentItem({comment}) {
     const [isReact, setIsReact] = useState(isReacted);
     const [numOfReacts, setNumOfReacts] = useState(reactCount);
     const {currentUserId, loading} = useAuth();
+    const router = useRouter();
 
 
     async function handleClickButton() {
@@ -56,6 +61,7 @@ function CommentItem({comment}) {
         }
         setIsReact(!isReact);
         const result = await reactComment(commentId)
+
         if (!result.isSuccessful) {
             console.log(result.message)
             toast.error("Error while reacting comment");
@@ -84,14 +90,7 @@ function CommentItem({comment}) {
                 </div>
                 <div className="flex items-center gap-2 text-muted-foreground">
                     {Number(userId) === Number(currentUserId) && (
-                        <Button
-                            variant="ghost"
-                            size="sm"
-                            className="p-0 ml-2"
-                            // onClick={handleEdit}
-                        >
-                            <FilePen className="w-5 h-5"/>
-                        </Button>
+                        <MoreActionComment commentInfo={comment}/>
                     )}
                     <Button
                         variant="ghost"
@@ -120,12 +119,29 @@ function CommentItem({comment}) {
                     style={{aspectRatio: "800/400", objectFit: "cover"}}
                 />
             )}
-            {numberOfChild !== 0 && (
-                <Button variant="ghost" className="flex items-center gap-1" onClick={handleClickButton}>
-                    {showChildComments === true ? <ArrowUp className="w-5 h-5"/> : <ArrowDown className="w-5 h-5"/>}
-                    <span className="leading-relaxed text-muted-foreground">{numberOfChild} reply</span>
-                </Button>
-            )}
+            <div className="flex justify-between">
+                <div>
+                    {numberOfChild !== 0 && (
+                        <Button variant="ghost" className="flex items-center gap-1" onClick={handleClickButton}>
+                            {showChildComments === true ? <ArrowUp className="w-5 h-5"/> :
+                                <ArrowDown className="w-5 h-5"/>}
+                            <span className="leading-relaxed text-muted-foreground">{numberOfChild} reply</span>
+                        </Button>
+                    )}
+                </div>
+                {parentCommentId === null && (
+                    <Dialog>
+                        <DialogTrigger asChild>
+                            <Button variant="ghost" className="flex items-center gap-1">
+                                <Reply className="w-5 h-5"/>
+                            </Button>
+                        </DialogTrigger>
+                        <DialogContent>
+                            <CommentForm postId={postId} parentCommentId={commentId}/>
+                        </DialogContent>
+                    </Dialog>
+                )}
+            </div>
             {showChildComments && (
                 <div className="mt-4">
                     {childComments.data.map(childComment => (

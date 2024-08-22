@@ -5,6 +5,11 @@ import CloseDialogPage from "@/app/(overview)/components/ultils/CloseDialogPage"
 import {getCommentInPost} from "@/lib/data";
 import SomethingWentWrong from "@/app/(overview)/components/ultils/SomethingWentWrong";
 import CommentList from "@/app/(overview)/components/comment/CommentList";
+import {Dialog, DialogContent, DialogTrigger} from "@/components/ui/dialog";
+import {Button} from "@/components/ui/button";
+import CommentForm from "@/app/(overview)/components/comment/CommentForm";
+
+export const revalidate = 1;
 
 export default async function Page({searchParams}) {
     const postId = searchParams.postId
@@ -31,11 +36,15 @@ export default async function Page({searchParams}) {
                     </ScrollArea>
                 )}
                 <div className="mt-6">
-                    <Textarea
-                        placeholder="Write a comment..."
-                        className="w-full rounded-md border border-muted px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
-                    />
-                    <div className="flex justify-end mt-2">
+                    <div className="flex justify-end mt-2 gap-4">
+                        <Dialog>
+                            <DialogTrigger asChild>
+                                <Button>Leave a Comment</Button>
+                            </DialogTrigger>
+                            <DialogContent>
+                                <CommentForm postId={postId}/>
+                            </DialogContent>
+                        </Dialog>
                         <CloseDialogPage>Button</CloseDialogPage>
                     </div>
                 </div>

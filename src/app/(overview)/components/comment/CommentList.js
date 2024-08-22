@@ -5,6 +5,8 @@ import Spinner from "@/app/(overview)/components/ultils/Spinner";
 import {usePathname, useRouter, useSearchParams} from "next/navigation";
 import {useComment} from "@/app/(overview)/components/context/CommentContext";
 
+export const revalidate = 1;
+
 function CommentList({initialComments, initialPageMeta}) {
     const {comments, setComments} = useComment();
     const [pageMeta, setPageMeta] = useState(initialPageMeta);

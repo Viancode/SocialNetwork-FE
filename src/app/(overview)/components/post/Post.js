@@ -15,6 +15,7 @@ import {useState} from "react";
 import {toast} from "sonner";
 import {reactPost} from "@/lib/action";
 import MoreActionPost from "@/app/(overview)/components/post/MoreActionPost";
+import {useRouter} from "next/navigation";
 
 function Post({postInfo}) {
     const {currentUserId, loading} = useAuth();
@@ -36,6 +37,7 @@ function Post({postInfo}) {
 
     const [isReact, setIsReact] = useState(isReacted);
     const [numOfReacts, setNumOfReacts] = useState(numberOfReacts);
+    const router = useRouter();
 
     if (loading) {
         return <Spinner/>
@@ -49,6 +51,7 @@ function Post({postInfo}) {
         }
         setIsReact(!isReact);
         const result = await reactPost(id)
+
 
         if (!result.isSuccessful) {
             console.log(result.message)

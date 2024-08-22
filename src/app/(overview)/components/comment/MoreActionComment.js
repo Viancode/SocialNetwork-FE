@@ -2,8 +2,9 @@ import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger
 import {useState} from "react";
 import {Ellipsis} from "lucide-react";
 import {Button} from "@/components/ui/button";
-import {deletePost} from "@/lib/action";
+import {deleteComment} from "@/lib/action";
 import {toast} from "sonner";
+import EditCommentForm from "@/app/(overview)/components/comment/EditCommentForm";
 import {
     Dialog,
     DialogContent,
@@ -12,18 +13,22 @@ import {
     DialogDescription,
     DialogFooter,
 } from "@/components/ui/dialog";
+import {useRouter} from "next/navigation";
 
-function MoreActionPost({postInfo}) {
+function MoreActionComment({commentInfo}) {
     const [showActions, setShowActions] = useState(false);
     const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+    const router = useRouter();
 
-    const handleDeletePost = async () => {
-        const result = await deletePost(postInfo.id);
+    const handleDeleteComment = async () => {
+        const result = await deleteComment(commentInfo.commentId);
         if (result.isSuccessful) {
-            toast.success("Post deleted successfully");
+            toast.success("Comment deleted successfully");
             setShowDeleteConfirm(false);
+            router.refresh()
         } else {
-            toast.error("Error while deleting post");
+            console.log(result.message);
+            toast.error("Error while deleting comment");
         }
     };
 
@@ -58,12 +63,7 @@ function MoreActionPost({postInfo}) {
                     )}
                 </DropdownMenu>
                 <DialogContent>
-                    {/* Placeholder for EditPostForm component */}
-                    <DialogTitle>Edit Post</DialogTitle>
-                    <DialogDescription>
-                        Edit your post content here.
-                    </DialogDescription>
-                    {/* Add your EditPostForm component here */}
+                    <EditCommentForm commentInfo={commentInfo}/>
                 </DialogContent>
             </Dialog>
 
@@ -71,13 +71,13 @@ function MoreActionPost({postInfo}) {
                 <DialogContent>
                     <DialogTitle>Confirm Delete</DialogTitle>
                     <DialogDescription>
-                        Are you sure you want to delete this post? This action cannot be undone.
+                        Are you sure you want to delete this comment? This action cannot be undone.
                     </DialogDescription>
                     <DialogFooter>
                         <Button variant="outline" onClick={() => setShowDeleteConfirm(false)}>
                             Cancel
                         </Button>
-                        <Button variant="destructive" onClick={handleDeletePost}>
+                        <Button variant="destructive" onClick={handleDeleteComment}>
                             Delete
                         </Button>
                     </DialogFooter>
@@ -87,4 +87,4 @@ function MoreActionPost({postInfo}) {
     );
 }
 
-export default MoreActionPost;
+export default MoreActionComment;

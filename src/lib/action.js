@@ -390,5 +390,57 @@ export async function editProfile(formData) {
 
 }
 
+export async function deleteComment(comment_id) {
+    return await http
+        .delete(`/comment`, {params: {comment_id}})
+        .then((res) => {
+            return {
+                isSuccessful: true,
+                data: res.data.result
+            };
+        })
+        .catch((err) => {
+            return {
+                isSuccessful: false,
+                message: err.response.data.message
+            };
+        });
+}
+
+export async function editComment(formData) {
+    return await http
+        .put(`/comment`, formData)
+        .then((res) => {
+            return {
+                isSuccessful: true,
+                data: res.data.result
+            };
+        })
+        .catch((err) => {
+            return {
+                isSuccessful: false,
+                message: err.response.data.message
+            };
+        });
+
+}
+
+export async function createComment(formData) {
+    return await http
+        .post(`/comment`, formData)
+        .then((res) => {
+            return {
+                isSuccessful: true,
+                data: res.data.result
+            };
+        })
+        .catch((err) => {
+            return {
+                isSuccessful: false,
+                message: err.response.data.message
+            };
+        });
+}
+
 
 

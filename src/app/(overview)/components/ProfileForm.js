@@ -14,6 +14,7 @@ import {ScrollArea} from "@/components/ui/scroll-area";
 import {editProfile} from "@/lib/action";
 import {toast} from "sonner";
 import Spinner from "@/app/(overview)/components/ultils/Spinner";
+import {useRouter} from "next/navigation";
 
 function ProfileForm({userProfile}) {
     const provinces = getProvince();
@@ -24,6 +25,7 @@ function ProfileForm({userProfile}) {
     const [isDeleteAvatar, setIsDeleteAvatar] = useState(false);
     const [isDeleteBackground, setIsDeleteBackground] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
+    const router = useRouter();
 
     const form = useForm({
         defaultValues: {
@@ -63,23 +65,12 @@ function ProfileForm({userProfile}) {
             formData.append("background", file);
         })
 
-        console.log('values.bio:', values.bio);
-        console.log('values.dateOfBirth:', values.dateOfBirth);
-        console.log('values.education:', values.education);
-        console.log('values.firstName:', values.firstName);
-        console.log('values.gender:', values.gender);
-        console.log('values.lastName:', values.lastName);
-        console.log('values.location:', values.location);
-        console.log('values.visibility:', values.visibility);
-        console.log('values.work:', values.work);
-        console.log('isDeleteAvatar:', isDeleteAvatar);
-        console.log('isDeleteBackground:', isDeleteBackground);
-
         setIsLoading(true);
         const result = await editProfile(formData);
         setIsLoading(false);
         if (result.isSuccessful) {
             toast.success("Profile updated successfully");
+            router.push('/home')
         } else {
             console.log(result.message);
             toast.error("Failed to update profile");
