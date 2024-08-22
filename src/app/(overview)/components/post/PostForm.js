@@ -161,6 +161,7 @@ function PostForm() {
                                                                            width={200}
                                                                            height={200}/>
                                                                     <button
+                                                                        type="button"
                                                                         className="absolute top-2 right-2 bg-red-500 text-white rounded-full p-1"
                                                                         onClick={() => handleRemoveImage(index)}
                                                                     >
