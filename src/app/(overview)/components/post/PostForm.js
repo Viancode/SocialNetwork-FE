@@ -25,12 +25,14 @@ import {useForm} from "react-hook-form";
 import {Form, FormControl, FormField, FormItem, FormLabel} from "@/components/ui/form";
 import {createPost} from "@/lib/action";
 import Spinner from "@/app/(overview)/components/ultils/Spinner";
+import {useRouter} from "next/navigation";
 
 function PostForm() {
     const [selectedImages, setSelectedImages] = useState([]);
     const [imagesPreviews, setImagesPreviews] = useState([]);
     const [selectedTags, setSelectedTags] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
+    const router = useRouter()
 
     const handleImageUpload = (event) => {
         const files = Array.from(event.target.files);
@@ -85,6 +87,7 @@ function PostForm() {
             toast.error("Failed to create post")
         } else {
             toast.success("Post created successfully")
+            router.push("/home")
         }
         setIsLoading(false)
     }
