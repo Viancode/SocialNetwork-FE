@@ -35,6 +35,8 @@ function Post({postInfo}) {
         isReacted
     } = postInfo;
 
+    console.log(postInfo)
+
     const [isReact, setIsReact] = useState(isReacted);
     const [numOfReacts, setNumOfReacts] = useState(numberOfReacts);
     const router = useRouter();

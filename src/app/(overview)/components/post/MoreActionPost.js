@@ -12,10 +12,13 @@ import {
     DialogDescription,
     DialogFooter,
 } from "@/components/ui/dialog";
+import EditPostForm from "@/app/(overview)/components/post/EditPostForm";
+import {useRouter} from "next/navigation";
 
 function MoreActionPost({postInfo}) {
     const [showActions, setShowActions] = useState(false);
     const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+    const router = useRouter();
 
     const handleDeletePost = async () => {
         const result = await deletePost(postInfo.id);
@@ -57,13 +60,8 @@ function MoreActionPost({postInfo}) {
                         </DropdownMenuContent>
                     )}
                 </DropdownMenu>
-                <DialogContent>
-                    {/* Placeholder for EditPostForm component */}
-                    <DialogTitle>Edit Post</DialogTitle>
-                    <DialogDescription>
-                        Edit your post content here.
-                    </DialogDescription>
-                    {/* Add your EditPostForm component here */}
+                <DialogContent className="sm:max-w-[650px]">
+                    <EditPostForm postInfo={postInfo}/>
                 </DialogContent>
             </Dialog>
 

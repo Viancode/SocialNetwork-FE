@@ -372,6 +372,23 @@ export async function deletePost(post_id) {
         });
 }
 
+export async function editPost(formData) {
+    return await http
+        .put(`/post`, formData)
+        .then((res) => {
+            return {
+                isSuccessful: true,
+                data: res.data.result
+            };
+        })
+        .catch((err) => {
+            return {
+                isSuccessful: false,
+                message: err.response.data.message
+            };
+        });
+}
+
 export async function editProfile(formData) {
     return await http
         .put(`/profile`, formData)
@@ -441,6 +458,8 @@ export async function createComment(formData) {
             };
         });
 }
+
+
 
 
 

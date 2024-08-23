@@ -68,16 +68,13 @@ function PostForm() {
 
     const onSubmit = async (values) => {
         console.log(values)
-        values.photos = selectedImages;
-        values.tags = selectedTags.map(tag => tag.id)
-        values.tags = values.tags.join(",")
         const formData = new FormData()
         formData.append("content", values.content)
         formData.append("visibility", values.visibility)
-        values.photos.forEach((photo) => {
+        selectedImages.forEach((photo) => {
             formData.append("photoLists", photo)
         })
-        formData.append("tagUsers", values.tags)
+        formData.append("tagUsers", selectedTags.map(user => user.id).join(","))
 
         setIsLoading(true)
         const result = await createPost(formData)
@@ -87,7 +84,7 @@ function PostForm() {
             toast.error("Failed to create post")
         } else {
             toast.success("Post created successfully")
-            router.push("/home")
+            router.refresh()
         }
         setIsLoading(false)
     }
