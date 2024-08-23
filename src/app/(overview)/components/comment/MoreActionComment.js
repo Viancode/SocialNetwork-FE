@@ -24,8 +24,8 @@ function MoreActionComment({commentInfo}) {
         const result = await deleteComment(commentInfo.commentId);
         if (result.isSuccessful) {
             toast.success("Comment deleted successfully");
-            setShowDeleteConfirm(false);
             router.refresh()
+            setShowDeleteConfirm(false);
         } else {
             console.log(result.message);
             toast.error("Error while deleting comment");

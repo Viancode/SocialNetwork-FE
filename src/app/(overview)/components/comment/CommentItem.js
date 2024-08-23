@@ -16,6 +16,7 @@ import MoreActionComment from "@/app/(overview)/components/comment/MoreActionCom
 import {redirect, useRouter} from "next/navigation";
 import {Dialog, DialogContent, DialogTrigger} from "@/components/ui/dialog";
 import CommentForm from "@/app/(overview)/components/comment/CommentForm";
+import {Card} from "@/components/ui/card";
 
 function CommentItem({comment}) {
     const {
@@ -73,7 +74,7 @@ function CommentItem({comment}) {
     }
 
     return (
-        <div className="bg-card p-4">
+        <Card className="bg-card p-4 mb-3">
             <div className="flex justify-between items-start">
                 <div className="flex items-center gap-3">
                     <Avatar className="w-10 h-10 border">
@@ -150,7 +151,7 @@ function CommentItem({comment}) {
                 </div>
             )}
 
-        </div>
+        </Card>
     );
 }
 

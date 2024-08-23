@@ -84,7 +84,7 @@ function EditCommentForm({commentInfo}) {
             <DialogHeader>
                 <DialogTitle>Edit Comment</DialogTitle>
             </DialogHeader>
-            <ScrollArea className="max-h-[400px]">
+            <ScrollArea className="max-h-[350px]">
                 {isLoading ? <Spinner/> : (
                     <Form {...form}>
                         <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-4">

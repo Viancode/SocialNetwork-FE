@@ -171,6 +171,33 @@ function ProfileForm({userProfile}) {
                                                     )}
                                                 />
                                             </div>
+                                            <div className="space-y-2">
+                                                <FormField
+                                                    control={form.control}
+                                                    name="visibility"
+                                                    render={({field}) => (
+                                                        <FormItem>
+                                                            <FormLabel>Visibility</FormLabel>
+                                                            <FormControl>
+                                                                <Select id="visibility" {...field}
+                                                                        onValueChange={field.onChange}
+                                                                        defaultValue={field.value}>
+                                                                    <SelectTrigger>
+                                                                        <SelectValue
+                                                                            placeholder="Select your location"/>
+                                                                    </SelectTrigger>
+                                                                    <SelectContent>
+                                                                        <SelectItem value="PUBLIC">Public</SelectItem>
+                                                                        <SelectItem value="PRIVATE">Private</SelectItem>
+                                                                        <SelectItem value="FRIEND">Friend</SelectItem>
+                                                                    </SelectContent>
+                                                                </Select>
+                                                            </FormControl>
+                                                            <FormMessage/>
+                                                        </FormItem>
+                                                    )}
+                                                />
+                                            </div>
                                             <div className="grid grid-cols-2 gap-6">
                                                 <div className="space-y-2">
                                                     <FormField

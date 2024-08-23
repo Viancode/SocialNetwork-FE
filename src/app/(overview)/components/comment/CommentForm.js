@@ -56,7 +56,11 @@ function CommentForm({postId, parentCommentId}) {
             router.refresh();
         } else {
             console.log(result.message);
-            toast.error("Error while create comment");
+            if (result.message === "Your comment is considered as spam") {
+                toast.error("Your comment is considered as spam");
+            } else {
+                toast.error("Error while create comment");
+            }
         }
     }
 
