@@ -75,6 +75,10 @@ function EditCommentForm({commentInfo}) {
             router.refresh();
         } else {
             console.log(result.message);
+            if (result.message === 'Your comment is considered as spam') {
+                toast.error("Your comment is considered as spam");
+                return;
+            }
             toast.error("Error while editing comment");
         }
     }

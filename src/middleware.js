@@ -1,4 +1,7 @@
 import {NextResponse} from "next/server";
+import {refreshAccessToken} from "@/lib/action";
+import {cookies} from "next/headers";
+import Cookies from "js-cookie";
 
 export async function middleware(request) {
     const accessToken = request.cookies.get("access-token")?.value;
@@ -9,6 +12,18 @@ export async function middleware(request) {
     if (isPublicRoute(request.nextUrl.pathname)) {
         return NextResponse.next();
     }
+
+    // if (!accessToken && refreshToken) {
+    //     const result = await refreshAccessToken(refreshToken);
+    //     if (result.isSuccessful) {
+    //         const accessToken = result.data.accessToken;
+    //         const response = NextResponse.next();
+    //         response.cookies.set("access-token", accessToken, {
+    //             maxAge: process.env.NEXT_PUBLIC_ACCESS_TOKEN_EXPIRY,
+    //         });
+    //         return response;
+    //     }
+    // }
 
     if (!accessToken || !refreshToken) {
         // return NextResponse.redirect(new URL(`/login?callbackUrl=${callbackUrl}`, request.url));

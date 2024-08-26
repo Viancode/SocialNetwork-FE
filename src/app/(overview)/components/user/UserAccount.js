@@ -14,7 +14,9 @@ import {LogOutIcon, RectangleEllipsis, UserIcon} from "lucide-react";
 import {getAvatarFallback} from "@/lib/utils";
 
 function UserAccount({userInfo}) {
-
+    if (!userInfo) {
+        return null;
+    }
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>

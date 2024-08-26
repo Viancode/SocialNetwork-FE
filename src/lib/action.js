@@ -2,24 +2,54 @@
 import {cookies} from "next/headers";
 import http from "./axios";
 
-export async function refreshAccessToken() {
-    const refresh_token = cookies().get("refresh-token")?.value;
-    if (refresh_token) {
-        return await http
-            .post("/auth/refresh", null, {params: {refresh_token}})
-            .then((res) => {
-                cookies().set("access-token", res.data.result.data.accessToken, {maxAge: process.env.NEXT_PUBLIC_ACCESS_TOKEN_EXPIRY});
+export async function refreshAccessToken(refreshToken) {
+    if (refreshToken) {
+        try {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/refresh?refresh_token=${refreshToken}`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({refresh_token: refreshToken}),
+            });
+            const data = await response.json();
+
+            if (response.ok) {
+                const newAccessToken = data.result.data.accessToken;
+                const newRefreshToken = data.result.data.refreshToken;
+                try {
+                    // Set new access token in cookies
+                    cookies().set("access-token", newAccessToken, {
+                        maxAge: parseInt(process.env.NEXT_PUBLIC_ACCESS_TOKEN_EXPIRY),
+                    });
+                } catch (err) {
+                    console.log(err)
+                }
+
                 return {
                     isSuccessful: true,
-                    data: res.data.result.data
-                }
-            })
-            .catch((err) => {
+                    data: {
+                        accessToken: newAccessToken,
+                        refreshToken: newRefreshToken
+                    }
+                };
+            } else {
                 return {
                     isSuccessful: false,
-                }
-            });
+                    message: data.message
+                };
+            }
+        } catch (err) {
+            return {
+                isSuccessful: false,
+                message: err.message
+            };
+        }
     }
+    return {
+        isSuccessful: false,
+        message: "No refresh token provided"
+    };
 }
 
 export async function login(loginForm) {

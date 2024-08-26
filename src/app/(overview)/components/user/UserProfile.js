@@ -2,7 +2,7 @@
 import {Avatar, AvatarImage, AvatarFallback} from "@/components/ui/avatar"
 import {capitalizeFirstLetter, getAvatarFallback} from "@/lib/utils";
 import Image from "next/image";
-import {Briefcase, Calendar, Dna, FilePen, GraduationCap, Mail, MapPinned} from "lucide-react";
+import {Briefcase, Calendar, Dna, Earth, FilePen, FolderLock, GraduationCap, Mail, MapPinned, User} from "lucide-react";
 import {Button} from "@/components/ui/button";
 import {useAuth} from "@/app/(overview)/components/context/AuthContext";
 import Spinner from "@/app/(overview)/components/ultils/Spinner";
@@ -44,6 +44,14 @@ function UserProfile({userProfile}) {
                         // </Button>
                         <ProfileForm userProfile={userProfile}/>
                     )}
+                </div>
+                <div className="flex items-center gap-2">
+                    {userProfile.visibility === "PUBLIC" && <Earth className="w-5 h-5 text-muted-foreground"/>}
+                    {userProfile.visibility === "PRIVATE" &&
+                        <FolderLock className="w-5 h-5 text-muted-foreground"/>}
+                    {userProfile.visibility === "FRIEND" &&
+                        <User className="w-5 h-5 text-muted-foreground"/>}
+                    <span>{capitalizeFirstLetter(userProfile.visibility)}</span>
                 </div>
                 <div className="grid sm:grid-cols-2 gap-6">
                     <div className="grid gap-2">
