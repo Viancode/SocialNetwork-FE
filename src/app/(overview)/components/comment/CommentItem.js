@@ -1,8 +1,8 @@
-import React, {useState} from 'react';
+import React, {useState, useCallback} from 'react';
 import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/avatar";
 import {formatDistanceToNow} from 'date-fns';
 import {getAvatarFallback} from "@/lib/utils";
-import {ArrowDown, ArrowUp, FilePen, Heart, Reply} from "lucide-react";
+import {ArrowDown, ArrowUp, Heart, Reply} from "lucide-react";
 import Image from "next/image";
 import {Button} from "@/components/ui/button";
 import Link from "next/link";
@@ -13,7 +13,7 @@ import {reactComment} from "@/lib/action";
 import {useAuth} from "@/app/(overview)/components/context/AuthContext";
 import Spinner from "@/app/(overview)/components/ultils/Spinner";
 import MoreActionComment from "@/app/(overview)/components/comment/MoreActionComment";
-import {redirect, useRouter} from "next/navigation";
+import {useRouter} from "next/navigation";
 import {Dialog, DialogContent, DialogTrigger} from "@/components/ui/dialog";
 import CommentForm from "@/app/(overview)/components/comment/CommentForm";
 import {Card} from "@/components/ui/card";
@@ -40,17 +40,41 @@ function CommentItem({comment}) {
     const [numOfReacts, setNumOfReacts] = useState(reactCount);
     const {currentUserId, loading} = useAuth();
     const router = useRouter();
+    const [childCommentMeta, setChildCommentMeta] = useState({page: 1, hasNext: false});
+    const [isLoadingMore, setIsLoadingMore] = useState(false);
 
+    const fetchChildComments = useCallback(async (page = 1) => {
+        setIsLoadingMore(true);
+        const result = await getChildComment(commentId, postId, page);
+        console.log(result)
+        if (result.isSuccessful) {
+            if (page === 1) {
+                setChildComments(result.data.data);
+            } else {
+                setChildComments(prevComments => [...prevComments, ...result.data.data]);
+            }
+            setChildCommentMeta({
+                page: result.data.pageMeta.page,
+                hasNext: result.data.pageMeta.hasNext
+            });
+            setShowChildComments(true);
+        } else {
+            toast.error("Error while fetching child comments");
+        }
+        setIsLoadingMore(false);
+    }, [commentId, postId]);
 
     async function handleClickButton() {
-        if (childComments) {
-            const result = await getChildComment(commentId, postId);
-            if (result.isSuccessful) {
-                setShowChildComments(!showChildComments);
-                setChildComments(result.data);
-            } else {
-                toast.error("Error while fetching child comments");
-            }
+        if (!showChildComments) {
+            await fetchChildComments();
+        } else {
+            setShowChildComments(false);
+        }
+    }
+
+    async function handleLoadMoreChildComments() {
+        if (childCommentMeta.hasNext) {
+            await fetchChildComments(childCommentMeta.page + 1);
         }
     }
 
@@ -70,7 +94,7 @@ function CommentItem({comment}) {
     }
 
     if (loading) {
-        return <Spinner/>
+        return <Spinner/>;
     }
 
     return (
@@ -103,7 +127,6 @@ function CommentItem({comment}) {
                     </Button>
                     <span>{numOfReacts}</span>
                 </div>
-
             </div>
             <div className="mt-4 text-sm">
                 <p>
@@ -145,12 +168,27 @@ function CommentItem({comment}) {
             </div>
             {showChildComments && (
                 <div className="mt-4">
-                    {childComments.data.map(childComment => (
+                    {childComments.map(childComment => (
                         <CommentItem key={childComment.commentId} comment={childComment}/>
                     ))}
+                    {childCommentMeta.hasNext && (
+                        <div className="text-center mt-4">
+                            <button
+                                onClick={handleLoadMoreChildComments}
+                                className="text-primary font-semibold hover:underline"
+                                disabled={isLoadingMore}
+                            >
+                                {isLoadingMore ? 'Loading...' : 'Load more replies'}
+                            </button>
+                        </div>
+                    )}
+                    {isLoadingMore && (
+                        <div className="mt-4 text-center">
+                            <Spinner/>
+                        </div>
+                    )}
                 </div>
             )}
-
         </Card>
     );
 }

@@ -18,7 +18,7 @@ export default async function Page({searchParams}) {
     let pageMeta = null;
     let comments = null;
 
-    if (result.isSuccessful) {
+    if (result?.isSuccessful) {
         pageMeta = result.data.pageMeta;
         comments = result.data.data;
     }
@@ -28,7 +28,7 @@ export default async function Page({searchParams}) {
             <div className="bg-background p-6 rounded-lg shadow-lg w-full max-w-3xl flex flex-col h-[80vh]">
                 <h2 className="text-xl font-bold mb-4">Comments</h2>
 
-                {!result.isSuccessful ? <SomethingWentWrong/> : (
+                {!result?.isSuccessful ? <SomethingWentWrong/> : (
                     <ScrollArea className="flex-grow">
                         {!result.isSuccessful ? <SomethingWentWrong/> :
                             <CommentList initialComments={comments} initialPageMeta={pageMeta}/>

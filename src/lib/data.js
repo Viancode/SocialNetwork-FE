@@ -138,9 +138,9 @@ export async function getNewsFeed(page = 1) {
         });
 }
 
-export async function getChildComment(parent_comment_id, post_id) {
+export async function getChildComment(parent_comment_id, post_id, page = 1) {
     return await http
-        .get(`/comment/${parent_comment_id}`, {params: {post_id}})
+        .get(`/comment/${parent_comment_id}`, {params: {post_id, page}})
         .then((res) => {
             return {
                 isSuccessful: true,
