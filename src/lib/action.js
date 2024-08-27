@@ -367,6 +367,23 @@ export async function setCloseRelation(userId, closeRelationship) {
         });
 }
 
+export async function deleteCloseRelation(target_user_id) {
+    return await http
+        .delete(`/close_relationship`, {params: {target_user_id}})
+        .then((res) => {
+            return {
+                isSuccessful: true,
+                data: res.data.result
+            };
+        })
+        .catch((err) => {
+            return {
+                isSuccessful: false,
+                message: err.response.data.message
+            };
+        });
+}
+
 export async function createPost(formData) {
     return await http
         .post(`/post`, formData)

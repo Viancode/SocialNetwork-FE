@@ -53,11 +53,11 @@ function EditPostForm({postInfo}) {
 
     const handleImageUpload = (event) => {
         const files = Array.from(event.target.files);
-        if (files.length + selectedImagesUpload.length + currentImages.length > 4) {
+        if (files.length + selectedImagesUpload.length + (currentImages?.length || 0) > 4) {
             toast.warning(`Post can only have 4 images`);
             return;
         }
-        const newFiles = files.slice(0, 4 - selectedImagesUpload.length - currentImages.length);
+        const newFiles = files.slice(0, 4 - selectedImagesUpload.length - (currentImages?.length || 0));
         setSelectedImagesUpload([...selectedImagesUpload, ...newFiles]);
         const newPreviews = newFiles.map((file) => URL.createObjectURL(file));
         setImagesUploadPreviews([...imagesUploadPreviews, ...newPreviews]);
@@ -106,7 +106,9 @@ function EditPostForm({postInfo}) {
             formData.append("photoLists", image)
         })
         formData.append("tagUsers", selectedTags.map(user => user.id).join(","))
-        formData.append("photoListString", currentImages.join(","))
+        if (currentImages) {
+            formData.append("photoListString", currentImages.join(","))
+        }
 
         setIsLoading(true)
         const result = await editPost(formData)
@@ -208,15 +210,20 @@ function EditPostForm({postInfo}) {
                                 name="photos"
                                 render={({field}) => (
                                     <FormItem>
-                                        <FormLabel>Photos
-                                            ({selectedImagesUpload.length}/{4 - currentImages.length})</FormLabel>
+                                        <FormLabel>Photos ({selectedImagesUpload.length}/
+                                            {currentImages ? 4 - currentImages.length : 4})</FormLabel>
                                         <div
                                             className="border-2 border-dashed border-muted rounded-md p-4 flex flex-col items-center justify-center gap-2 hover:bg-muted/5 transition-colors"
                                         >
                                             <FormControl>
-                                                <Input {...field} type="file" accept="image/*" multiple
-                                                       onChange={handleImageUpload}
-                                                       disabled={selectedImagesUpload.length + currentImages.length >= 4}/>
+                                                <Input
+                                                    {...field}
+                                                    type="file"
+                                                    accept="image/*"
+                                                    multiple
+                                                    onChange={handleImageUpload}
+                                                    disabled={(currentImages?.length || 0) + selectedImagesUpload.length >= 4}
+                                                />
                                             </FormControl>
                                             <div className="flex justify-center">
                                                 <Carousel className="w-full max-w-xs">
