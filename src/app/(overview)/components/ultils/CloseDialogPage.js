@@ -10,7 +10,7 @@ function CloseDialogPage() {
     const {setComments} = useComment();
     const {setReactions} = useReaction();
 
-    const handleClose = () => {
+    const handleClose = async () => {
         setComments([]);
         setReactions([]);
         router.back();

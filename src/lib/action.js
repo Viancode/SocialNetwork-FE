@@ -67,7 +67,7 @@ export async function login(loginForm) {
         .catch((err) => {
             return {
                 isSuccessful: false,
-                message: err.response.data.message
+                message: err.response?.data?.message
             }
         });
 }
@@ -87,7 +87,7 @@ export async function register(registerForm) {
 
             return {
                 isSuccessful: false,
-                message: err.response.data.message
+                message: err.response?.data?.message
             }
         });
 }
@@ -104,7 +104,7 @@ export async function verifyRegister(token) {
         .catch((err) => {
             return {
                 isSuccessful: false,
-                message: err.response.data.message
+                message: err.response?.data?.message
             }
         });
 }
@@ -125,7 +125,7 @@ export async function logout() {
             .catch((err) => {
                 return {
                     isSuccessful: false,
-                    message: err.response.data.message
+                    message: err.response?.data?.message
                 }
             });
     }
@@ -142,7 +142,7 @@ export async function changePassword(new_password, old_password) {
         .catch((err) => {
             return {
                 isSuccessful: false,
-                message: err.response.data.message
+                message: err.response?.data?.message
             }
         });
 }
@@ -158,7 +158,7 @@ export async function verifyChangePassword(token) {
         .catch((err) => {
             return {
                 isSuccessful: false,
-                message: err.response.data.message
+                message: err.response?.data?.message
             }
         });
 }
@@ -175,7 +175,7 @@ export async function forgotPassword(email) {
         .catch((err) => {
             return {
                 isSuccessful: false,
-                message: err.response.data.message
+                message: err.response?.data?.message
             }
         });
 }
@@ -191,7 +191,7 @@ export async function resetPassword(new_password, token) {
         .catch((err) => {
             return {
                 isSuccessful: false,
-                message: err.response.data.message
+                message: err.response?.data?.message
             }
         });
 }
@@ -209,7 +209,7 @@ export async function reactPost(postId) {
         .catch((err) => {
             return {
                 isSuccessful: false,
-                message: err.response.data.message
+                message: err.response?.data?.message
             };
         });
 }
@@ -226,7 +226,7 @@ export async function reactComment(commentId) {
         .catch((err) => {
             return {
                 isSuccessful: false,
-                message: err.response.data.message
+                message: err.response?.data?.message
             };
         });
 }
@@ -243,7 +243,7 @@ export async function deleteRequestFriend(userId) {
         .catch((err) => {
             return {
                 isSuccessful: false,
-                message: err.response.data.message
+                message: err.response?.data?.message
             };
         });
 }
@@ -260,7 +260,7 @@ export async function acceptRequestFriend(userId) {
         .catch((err) => {
             return {
                 isSuccessful: false,
-                message: err.response.data.message
+                message: err.response?.data?.message
             };
         });
 }
@@ -277,7 +277,7 @@ export async function rejectRequestFriend(userId) {
         .catch((err) => {
             return {
                 isSuccessful: false,
-                message: err.response.data.message
+                message: err.response?.data?.message
             };
         });
 }
@@ -294,7 +294,7 @@ export async function unFriend(userId) {
         .catch((err) => {
             return {
                 isSuccessful: false,
-                message: err.response.data.message
+                message: err.response?.data?.message
             };
         });
 }
@@ -311,7 +311,7 @@ export async function unBlock(userId) {
         .catch((err) => {
             return {
                 isSuccessful: false,
-                message: err.response.data.message
+                message: err.response?.data?.message
             };
         });
 }
@@ -328,7 +328,7 @@ export async function sendRequestFriend(userId) {
         .catch((err) => {
             return {
                 isSuccessful: false,
-                message: err.response.data.message
+                message: err.response?.data?.message
             };
         });
 }
@@ -345,7 +345,7 @@ export async function block(userId) {
         .catch((err) => {
             return {
                 isSuccessful: false,
-                message: err.response.data.message
+                message: err.response?.data?.message
             };
         });
 }
@@ -362,7 +362,7 @@ export async function setCloseRelation(userId, closeRelationship) {
         .catch((err) => {
             return {
                 isSuccessful: false,
-                message: err.response.data.message
+                message: err.response?.data?.message
             };
         });
 }
@@ -379,7 +379,7 @@ export async function deleteCloseRelation(target_user_id) {
         .catch((err) => {
             return {
                 isSuccessful: false,
-                message: err.response.data.message
+                message: err.response?.data?.message
             };
         });
 }
@@ -396,7 +396,7 @@ export async function createPost(formData) {
         .catch((err) => {
             return {
                 isSuccessful: false,
-                message: err.response.data.message
+                message: err.response?.data?.message
             };
         });
 
@@ -414,7 +414,7 @@ export async function deletePost(post_id) {
         .catch((err) => {
             return {
                 isSuccessful: false,
-                message: err.response.data.message
+                message: err.response?.data?.message
             };
         });
 }
@@ -431,7 +431,7 @@ export async function editPost(formData) {
         .catch((err) => {
             return {
                 isSuccessful: false,
-                message: err.response.data.message
+                message: err.response?.data?.message
             };
         });
 }
@@ -448,7 +448,7 @@ export async function editProfile(formData) {
         .catch((err) => {
             return {
                 isSuccessful: false,
-                message: err.response.data.message
+                message: err.response?.data?.message
             };
         });
 
@@ -466,7 +466,7 @@ export async function deleteComment(comment_id) {
         .catch((err) => {
             return {
                 isSuccessful: false,
-                message: err.response.data.message
+                message: err.response?.data?.message
             };
         });
 }
@@ -483,7 +483,7 @@ export async function editComment(formData) {
         .catch((err) => {
             return {
                 isSuccessful: false,
-                message: err.response.data.message
+                message: err.response?.data?.message
             };
         });
 
@@ -501,7 +501,7 @@ export async function createComment(formData) {
         .catch((err) => {
             return {
                 isSuccessful: false,
-                message: err.response.data.message
+                message: err.response?.data?.message
             };
         });
 }

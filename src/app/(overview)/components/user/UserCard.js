@@ -4,6 +4,7 @@ import {getAvatarFallback} from "@/lib/utils";
 import TextExpander from "@/app/(overview)/components/ultils/TextExpander";
 import {getUserFriendCount, getUserPostCount, getUserProfile} from "@/lib/data";
 import Spinner from "@/app/(overview)/components/ultils/Spinner";
+import SomethingWentWrong from "@/app/(overview)/components/ultils/SomethingWentWrong";
 
 async function UserCard() {
 
@@ -12,7 +13,11 @@ async function UserCard() {
     const {_, data: userInfo} = await getUserProfile();
 
     if (!userInfo) {
-        return <div>No user information available</div>;
+        return (
+            <Card>
+                <SomethingWentWrong/>
+            </Card>
+        );
     }
 
     return (

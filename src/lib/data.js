@@ -14,7 +14,7 @@ export async function getUserProfile(target_user_id) {
         .catch((err) => {
             return {
                 isAllowed: false,
-                message: err.response.data.message
+                message: err.response?.data?.message
             };
         });
 }
@@ -31,7 +31,7 @@ export async function getUserPostCount() {
         .catch((err) => {
             return {
                 isSuccessful: false,
-                message: err.response.data.message
+                message: err.response?.data?.message
             };
         })
 }
@@ -48,7 +48,7 @@ export async function getUserFriendCount() {
         .catch((err) => {
             return {
                 isSuccessful: false,
-                message: err.response.data.message
+                message: err.response?.data?.message
             };
         })
 }
@@ -65,7 +65,7 @@ export async function getSuggestFriend(page = 1) {
         .catch((err) => {
             return {
                 isSuccessful: false,
-                message: err.response.data.message
+                message: err.response?.data?.message
             };
         })
 }
@@ -82,7 +82,7 @@ export async function getUserPost(page = 1, target_user_id) {
         .catch((err) => {
             return {
                 isSuccessful: false,
-                message: err.response.data.message
+                message: err.response?.data?.message
             };
         })
 }
@@ -99,7 +99,7 @@ export async function getCommentInPost(page = 1, post_id) {
         .catch((err) => {
             return {
                 isSuccessful: false,
-                message: err.response.data.message
+                message: err.response?.data?.message
             };
         })
 }
@@ -116,7 +116,7 @@ export async function getReactionInPost(page = 1, post_id) {
         .catch((err) => {
             return {
                 isSuccessful: false,
-                message: err.response.data.message
+                message: err.response?.data?.message
             };
         })
 }
@@ -133,7 +133,7 @@ export async function getNewsFeed(page = 1) {
         .catch((err) => {
             return {
                 isSuccessful: false,
-                message: err.response.data.message
+                message: err.response?.data?.message
             };
         });
 }
@@ -150,7 +150,7 @@ export async function getChildComment(parent_comment_id, post_id, page = 1) {
         .catch((err) => {
             return {
                 isSuccessful: false,
-                message: err.response.data.message
+                message: err.response?.data?.message
             };
         });
 }
@@ -167,7 +167,7 @@ export async function getFriendRequest(page = 1) {
         .catch((err) => {
             return {
                 isSuccessful: false,
-                message: err.response.data.message
+                message: err.response?.data?.message
             };
         });
 }
@@ -184,7 +184,7 @@ export async function getReceivedFriendRequest(page = 1) {
         .catch((err) => {
             return {
                 isSuccessful: false,
-                message: err.response.data.message
+                message: err.response?.data?.message
             };
         });
 }
@@ -201,7 +201,7 @@ export async function getListFriend(page = 1) {
         .catch((err) => {
             return {
                 isSuccessful: false,
-                message: err.response.data.message
+                message: err.response?.data?.message
             };
         });
 }
@@ -218,7 +218,7 @@ export async function getListBlock(page = 1) {
         .catch((err) => {
             return {
                 isSuccessful: false,
-                message: err.response.data.message
+                message: err.response?.data?.message
             };
         });
 }
@@ -235,7 +235,7 @@ export async function searchFriend(page = 1, keyword) {
         .catch((err) => {
             return {
                 isSuccessful: false,
-                message: err.response.data.message
+                message: err.response?.data?.message
             };
         });
 }
@@ -252,7 +252,7 @@ export async function searchUser(page = 1, keyword) {
         .catch((err) => {
             return {
                 isSuccessful: false,
-                message: err.response.data.message
+                message: err.response?.data?.message
             };
         });
 }

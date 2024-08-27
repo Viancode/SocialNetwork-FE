@@ -4,7 +4,7 @@ import {getUserProfile} from "@/lib/data";
 export default async function Page() {
     const {_, data: userInfo} = await getUserProfile();
 
-    if (!userInfo.id) {
+    if (!userInfo?.id) {
         redirect("/login");
     }
 
