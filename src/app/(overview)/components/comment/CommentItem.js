@@ -123,7 +123,8 @@ function CommentItem({comment}) {
                         className="p-0"
                         onClick={handleReact}
                     >
-                        <Heart className={`w-5 h-5 ${isReact ? 'fill-current text-black' : ''}`}/>
+                        <Heart
+                            className={`w-5 h-5 ${isReact ? 'fill-current text-black dark:text-white' : 'dark:text-gray-400'}`}/>
                     </Button>
                     <span>{numOfReacts}</span>
                 </div>

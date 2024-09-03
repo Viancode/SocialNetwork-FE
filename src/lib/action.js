@@ -54,17 +54,20 @@ export async function refreshAccessToken(refreshToken) {
 
 export async function login(loginForm) {
     const {email, password} = loginForm;
+    console.log(email, password)
     return await http
         .post("/auth/login", {email, password})
         .then((res) => {
             const data = res.data.result.data
             cookies().set("access-token", data.accessToken, {maxAge: process.env.NEXT_PUBLIC_ACCESS_TOKEN_EXPIRY});
             cookies().set("refresh-token", data.refreshToken, {maxAge: process.env.NEXT_PUBLIC_ACCESS_REFRESH_EXPIRY});
+            console.log("data", data)
             return {
                 isSuccessful: true,
             }
         })
         .catch((err) => {
+            console.log(err)
             return {
                 isSuccessful: false,
                 message: err.response?.data?.message

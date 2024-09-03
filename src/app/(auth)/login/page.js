@@ -13,6 +13,7 @@ import {toast} from "sonner";
 import {useRouter} from "next/navigation";
 import {useEffect} from "react";
 import Cookies from "js-cookie";
+import process from "next/dist/build/webpack/loaders/resolve-url-loader/lib/postcss";
 
 export default function Page() {
     useEffect(() => {
@@ -21,6 +22,10 @@ export default function Page() {
         Cookies.remove("refresh-token");
     }, []);
 
+    console.log("api url: ", process.env.NEXT_PUBLIC_API_URL);
+    console.log("access token expiry: ", process.env.NEXT_PUBLIC_ACCESS_TOKEN_EXPIRY);
+    console.log("refresh token expiry: ", process.env.NEXT_PUBLIC_ACCESS_REFRESH_EXPIRY);
+    console.log("verify token expiry: ", process.env.NEXT_PUBLIC_ACCESS_VERIFY_EXPIRY);
 
     const router = useRouter()
     const form = useForm({

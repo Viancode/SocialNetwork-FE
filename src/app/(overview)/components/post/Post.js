@@ -119,7 +119,9 @@ function Post({postInfo}) {
                                     className="p-0"
                                     onClick={handleReact}
                                 >
-                                    <Heart className={`w-4 h-4 ${isReact ? 'fill-current text-black' : ''}`}/>
+                                    <Heart
+                                        className={`w-4 h-4 ${isReact ? 'fill-current text-black dark:text-white' : 'dark:text-gray-400'}`}/>
+                                    {/*<Heart className={`w-4 h-4 ${isReact ? 'fill-current text-black' : ''}`}/>*/}
                                 </Button>
                                 <Link href={`/react?postId=${id}`}>
                                     <span>{`${numOfReacts} reactions`}</span>
